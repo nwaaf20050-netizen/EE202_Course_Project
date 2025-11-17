@@ -1,0 +1,156 @@
+#StudentsClass.py
+import sqlite3
+# DataBase file name
+
+#Goals
+#Change the sql code to create Users table instead of Students table
+#Define the attributes of the User class
+#لازم نتفق على مواصفات الكلاس عشان نقدر نكمل الشغل صح
+
+
+#LOG
+#Tried the edit and change methods names but couldn't find a way to do it properly
+#حاولت 
+
+# --------------------------------------------------
+## Need fixing and adding changes 
+#and adding sqlite functionalities to the user class
+
+#--------------------------------------------------
+
+
+class Users : #Students class to represent a student in the system
+    list_Of_Valid_Roles=["ADMIN","Administrative","Faculty","Student"] #Valid Role list
+    def __init__(self,user_id,name,email,birthday,role): #Constructor to initialize User attributes
+
+        self.id=user_id
+        self.name=name
+        self.email=email
+        self.birthday=birthday
+        self.role=role
+        # self.transcript = []                # List of completed courses (filled later)
+        self.db_name="RegistrationSystem.db"
+
+        self.create_tables() #Create Students table in the database if it doesn't exist
+        self.save_user_to_db()    #Save student data to the database
+
+
+    # def create_tables(self): #Method to create Students table in the database
+    #     try:
+    #         self.connect=sqlite3.connect(self.db_name) #connect to the database
+    #         self.cursor=self.connect.cursor()     #create a cursor object
+
+    #         self.cursor.execute('''CREATE TABLE IF NOT EXISTS Students (
+    #                                 student_id TEXT PRIMARY KEY NOT NULL ,
+    #                                 name TEXT NOT NULL ,
+    #                                 email TEXT NOT NULL CHECK (email LIKE '%_@__%.__%'),
+    #                                 program TEXT NOT NULL CHECK (program IN ('Computer', 'Power', 'Biomedical', 'Communication')),
+    #                                 current_level INTEGER NOT NULL CHECK (current_level BETWEEN 1 AND 4)
+    #                             )''') #create Students table if it doesn't exist
+    #         self.cursor.execute("""
+    #                         CREATE TABLE IF NOT EXISTS transcripts (
+    #                             id INTEGER PRIMARY KEY AUTOINCREMENT,
+    #                             student_id TEXT NOT NULL PRIMARY KEY,
+    #                             course_code TEXT NOT NULL PRIMARY KEY,
+    #                             credits INTEGER NOT NULL CHECK (credits > 0),
+    #                             grade TEXT  NOT NULL CHECK (grade IN ('A', 'B', 'C', 'D', 'F', 'A+', 'B+', 'C+', 'D+')),
+    #                             FOREIGN KEY(student_id) REFERENCES students(student_id)
+    #                             )
+    #                             """) #create Transcript table if it doesn't exist       
+            
+    #         self.connect.commit() #commit the changes
+    #         self.connect.close() #close the connection
+    #     except sqlite3.Error as e:
+    #         print(f"An error occurred while creating the Students table: {e}")
+
+
+
+
+
+    # def save_user_to_db(self): #Method to save student data to the database
+    #     try:
+            
+    #         self.connect=sqlite3.connect(self.db_name) #connect to the database
+    #         self.cursor=self.connect.cursor()     #create a cursor object
+    #         self.cursor.execute('''INSERT INTO Students (student_id, name, email, program, current_level)
+    #                             VALUES (?, ?, ?, ?, ?)''',
+    #                             (self.student_id, self.name, self.email, self.program, self.current_level)) #insert student data into Students table
+            
+
+    #         self.connect.commit() #commit the changes
+    #         self.connect.close() #close the connection
+    #         print(f"Student {self.name} with ID {self.student_id} saved to database.")
+    #     except sqlite3.IntegrityError as e: #handle integrity errors (e.g., duplicate student_id)
+    #         print(f"An integrity error occurred while saving the student: {e}")
+    #     except sqlite3.Error as e:
+    #         print(f"An error occurred while saving the student: {e}")
+
+
+    # def add_to_transcript(self, course_code,credit_hours, grade): #Method to add a course to the student's transcript
+    #         try:
+    #             connect=sqlite3.connect(self.db_name) #connect to the database
+    #             cursor=connect.cursor()     #create a cursor object
+
+    #             cursor.execute(""" SELECT * FROM Transcript WHERE student_id=? AND course_code=? """, (self.student_id, course_code)) #check if the course is already in the transcript
+    #             result = cursor.fetchone() #fetch the result
+    #             if result:
+    #                 print(f"Course {course_code} is already in the transcript for student {self.student_id}.")
+    #                 return
+
+    #             cursor.execute('''INSERT INTO Transcript (student_id, course_code, credit_hours, grade)
+    #                             VALUES (?, ?, ?, ?)''', (self.student_id, course_code, credit_hours, grade)) #insert course data into Transcript table
+    #             connect.commit() #commit the changes
+    #             connect.close() #close the connection
+    #             print(f"Course {course_code} added to transcript for student {self.student_id}.")    
+    #             self.transcript.append((course_code, credit_hours, grade)) #add course to the transcript list
+    #         except sqlite3.Error as e:
+    #             print(f"An error occurred while adding the course to the transcript: {e}")
+
+
+
+
+    # def get_completed_credit(self): #Method to calculate total completed credit hours
+    #         try:
+    #             connect=sqlite3.connect(self.db_name) #connect to the database
+    #             cursor=connect.cursor()     #create a cursor object
+
+    #             cursor.execute(""" SELECT SUM(credit_hours) FROM Transcript WHERE student_id=? """, (self.student_id,)) #calculate total credit hours from Transcript table
+    #             total = cursor.fetchone() #fetch the result 
+    #             connect.close() #close the connection
+    #             total_credit_hours = total[0] if total[0] else 0 #handle case where no courses are completed
+    #             return total_credit_hours #return total completed credit hours
+    #         except sqlite3.Error as e:
+    #             print(f"An error occurred while calculating completed credit hours: {e}")
+    #             return 0
+    
+
+
+    # def view_transcript(self): #Method to view the student's transcript
+    #         try:
+    #             connect=sqlite3.connect(self.db_name) #connect to the database
+    #             cursor=connect.cursor()     #create a cursor object
+
+    #             cursor.execute(""" SELECT course_code, credit_hours, grade FROM Transcript WHERE student_id=? """, (self.student_id,)) #fetch transcript data from Transcript table
+    #             records = cursor.fetchall() #fetch all records
+    #             connect.close() #close the connection
+    #             print(f"Transcript for student {self.student_id}:")
+    #             for record in records:
+    #                 print(f"Course Code: {record[0]}, Credit Hours: {record[1]}, Grade: {record[2]}") #print each course in the transcript
+    #         except sqlite3.Error as e:
+    #             print(f"An error occurred while retrieving the transcript: {e}")
+
+
+    # def __str__(self): #String representation of the student object
+    #     try:
+    #         self.connect=sqlite3.connect(self.db_name) #connect to the database
+    #         self.cursor=self.connect.cursor()     #create a cursor object
+
+    #         self.cursor.execute(""" SELECT * FROM Students WHERE student_id=? """, (self.student_id,)) #fetch student data from Students table
+    #         record = self.cursor.fetchone() #fetch the record
+    #         self.connect.close() #close the connection
+    #         if record:
+    #             return f"Student ID: {record[0]}, Name: {record[1]}, Email: {record[2]}, Program: {record[3]}, Current Level: {record[4]}"
+    #         else:
+    #             return f"No student found with ID {self.student_id}."
+    #     except sqlite3.Error as e:
+    #         return f"An error occurred while retrieving the student data: {e}"
