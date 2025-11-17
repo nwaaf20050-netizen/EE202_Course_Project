@@ -3,7 +3,7 @@ import sqlite3
 # DataBase file name
 
 
-class Studnets : #Students class to represent a student in the system
+class Students : #Students class to represent a student in the system
     list_Of_Valid_Programs=["Computer","Power","Biomedical","Communication"] #Valid programs list
     def __init__(self,name,student_id,email,program,current_level): #Constructor to initialize student attributes
 
