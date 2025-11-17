@@ -18,7 +18,7 @@ class Admin:
         self.Email = Email
         self.name = name
         self.password = password
-        self.identifier = Email  # لإتاحة البحث عبر الـ Email كما في find_admin
+        self.identifier = Email 
 
     def __repr__(self):
         return f"<Admin {self.identifier} | {self.name}>"
@@ -159,3 +159,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
