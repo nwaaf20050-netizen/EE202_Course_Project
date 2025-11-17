@@ -218,7 +218,51 @@ class RegistrationSystem:
             return False
         finally:
             self.connect.close() #close the connection
+
+    #abdullah-eduit-for the conect the data ===========================================================
+    def get_course_enrollment_data(self):
+    """
+    Fetches the course code, maximum capacity, and current number of enrolled 
+    students for all courses by joining the Courses and Enrollments tables.
+
+    Returns:
+        A list of tuples: [(course_code, max_capacity, current_enrollment), ...]
+    """
+    conn = None
+    try:
+        # Re-establish connection for thread safety/proper closing
+        conn = sqlite3.connect(self.db_name)
+        cursor = conn.cursor()
         
+        # SQL Query to aggregate enrollment data
+        query = """
+        SELECT
+            c.course_code,
+            c.maximum_capacity,
+            COUNT(e.student_id) AS current_enrollment
+        FROM
+            Courses c
+        LEFT JOIN
+            Enrollments e ON c.course_code = e.course_code
+        GROUP BY
+            c.course_code, c.maximum_capacity
+        ORDER BY
+            c.course_code;
+        """
+        cursor.execute(query)
+        data = cursor.fetchall()
+        
+        return data
+    
+    except sqlite3.Error as e:
+        print(f"Database error while fetching enrollment data: {e}")
+        return []
+    
+    finally:
+        # Ensure the connection is closed
+        if conn:
+            conn.close()
+#================================================================================================================
         
     def delete_student(self, student_id):
         """
