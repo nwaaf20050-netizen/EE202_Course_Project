@@ -7,7 +7,7 @@ class Student:
         self.student_id = student_id
         self.name = name
         self.email = email
-        self.program = program  # Must be from the defined list
+        self.program = program  # Must be from the defined list ['Computer', 'Power', 'Biomedical', 'Communication']
         self.level = level
 
         # Transcript is a list of tuples: (course_code, grade)

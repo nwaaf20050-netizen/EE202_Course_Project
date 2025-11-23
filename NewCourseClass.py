@@ -12,7 +12,7 @@ class Course:
         self.lab_hours = lab_hours
         self.prerequisites = prerequisites  # list of course codes
         self.max_capacity = max_capacity
-        self.program = program
+        self.program = program  # list of programs
         self.level = level
 
         # System-managed attribute
