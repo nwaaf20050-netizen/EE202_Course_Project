@@ -1,13 +1,13 @@
 # StudentClass.py
 # Represents a student model with attributes and methods to manage student data.
+import NewUserClass
 import sqlite3
-class Student:
 
-    def __init__(self, student_id, name, email, program, level, transcript=None):
-        self.student_id = student_id
-        self.name = name
-        self.email = email
-        self.program = program  # Must be from the defined list ['Computer', 'Power', 'Biomedical', 'Communication']
+class Student(NewUserClass.User):
+
+    def __init__(self, id_number, name, email, program, level, transcript=None):
+        super().__init__(name, email, id_number)
+        self.program = program  # Must be from the defined list
         self.level = level
 
         # Transcript is a list of tuples: (course_code, grade)
