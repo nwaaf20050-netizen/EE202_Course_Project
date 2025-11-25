@@ -30,6 +30,7 @@ class RegistrationSystem:
                                     student_id TEXT PRIMARY KEY NOT NULL ,
                                     name TEXT NOT NULL ,
                                     email TEXT NOT NULL CHECK (email LIKE '%_@__%.__%'),
+                                    password TEXT NOT NULL,
                                     program TEXT NOT NULL CHECK (program IN ('Computer', 'Power', 'Biomedical', 'Communication')),
                                     current_level INTEGER NOT NULL CHECK (current_level BETWEEN 1 AND 4)
                                 )''') #create Students table if it doesn't exist
@@ -434,3 +435,27 @@ class RegistrationSystem:
         finally:
             # Close the database connection
             self.connect.close()
+    def view_transcript(self, student_id):
+        try:
+             # Open database connection
+            self.connect = sqlite3.connect(self.db_name)
+            self.cursor = self.connect.cursor()
+            self.cursor.execute("""
+                SELECT course_code, grade
+                FROM Transcripts
+                WHERE student_id = ?
+            """, (student_id,))
+            rows = self.cursor.fetchall()
+            for i in range(len(rows)):
+                    self.cursor.execute("""
+                        SELECT credit_hours
+                        FROM Courses
+                        WHERE course_code = ?
+                    """, (rows[i][0],))
+                    credit_hours=self.cursor.fetchone()[0]
+                    rows[i]=rows[i][0],rows[i][1],credit_hours    
+            return rows
+        except sqlite3.Error as e:
+            print(f"An error occurred while viewing transcript: {e}")
+        finally:
+            self.connect.close()#close the connection

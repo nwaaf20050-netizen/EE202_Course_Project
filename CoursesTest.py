@@ -175,52 +175,52 @@ system = RegistrationSystem()
 # Create Students
 # ============================================================
 
-student_good = Student("2210001", "Nawaf", "nawaf@mail.com", "Computer", 4)
-student_bad_program = Student("2210002", "Ali", "ali@mail.com", "Computer", 4)
-student_low_level = Student("2210003", "Sara", "sara@mail.com", "Biomedical", 1)
+# student_good = Student("2210001", "Nawaf", "nawaf@mail.com", "Computer", 4)
+# student_bad_program = Student("2210002", "Ali", "ali@mail.com", "Computer", 4)
+# student_low_level = Student("2210003", "Sara", "sara@mail.com", "Biomedical", 1)
 
-system.add_student(student_good)
-system.add_student(student_bad_program)
-system.add_student(student_low_level)
+# system.add_student(student_good)
+# system.add_student(student_bad_program)
+# system.add_student(student_low_level)
 
-print("[OK] Students added.\n")
+# print("[OK] Students added.\n")
 
 # ============================================================
 # Create Courses
 # ============================================================
 
-COE201 = Course("COE201", "Intro to Programming", 3, 3, 1, [], 40, "Computer", 1)
-COE301 = Course("COE301", "Data Structures", 3, 3, 1, "COE201", 1, ["Power"], 3)
-COE350 = Course("COE350", "Operating Systems", 3, 3, 1, ["COE301","COE201"], 40, ["Computer"], 4)
-# cc=Course()
+# COE201 = Course("COE201", "Intro to Programming", 3, 3, 1, [], 40, "Computer", 1)
+# COE301 = Course("COE301", "Data Structures", 3, 3, 1, "COE201", 1, ["Power"], 3)
+# COE350 = Course("COE350", "Operating Systems", 3, 3, 1, ["COE301","COE201"], 40, ["Computer"], 4)
+# # cc=Course()
 
-system.add_course(COE201)
-system.add_course(COE301)
-system.add_course(COE350)
+# system.add_course(COE201)
+# system.add_course(COE301)
+# system.add_course(COE350)
 
-print("[OK] Courses added.\n")
+# print("[OK] Courses added.\n")
 
 # ============================================================
 # Add Transcript Manually For Testing
 # ============================================================
 
-conn = sqlite3.connect("RegistrationSystem.db")
-cur = conn.cursor()
+# conn = sqlite3.connect("RegistrationSystem.db")
+# cur = conn.cursor()
 
-# student_good: passed COE201 but failed COE301
-cur.execute("INSERT INTO transcripts VALUES (?, ?, ?)", ("2210001", "COE201", "A"))
-cur.execute("INSERT INTO transcripts VALUES (?, ?, ?)", ("2210001", "COE301", "F"))
+# # student_good: passed COE201 but failed COE301
+# cur.execute("INSERT INTO transcripts VALUES (?, ?, ?)", ("2210001", "COE201", "A"))
+# cur.execute("INSERT INTO transcripts VALUES (?, ?, ?)", ("2210001", "COE301", "F"))
 
-# student_bad_program: passed everything
-cur.execute("INSERT INTO transcripts VALUES (?, ?, ?)", ("2210002", "COE201", "A"))
+# # student_bad_program: passed everything
+# cur.execute("INSERT INTO transcripts VALUES (?, ?, ?)", ("2210002", "COE201", "A"))
 
-# student_low_level: no courses
-conn.commit()
-conn.close()
+# # student_low_level: no courses
+# conn.commit()
+# conn.close()
 
-print("[OK] Transcript entries added.\n")
+# print("[OK] Transcript entries added.\n")
 
-# # ============================================================
+# # # ============================================================
 # # 1) Test prerequisite missing
 # # ============================================================
 
@@ -234,11 +234,11 @@ print("[OK] Transcript entries added.\n")
 # # 2) Test failed prerequisite (Grade = F)
 # # ============================================================
 
-print("TEST 2: Failed prerequisite (Nawaf wants COE301 and he has F):")
-if system.validate_schedule("2210001", ["COE301"]):
-    print("[PASS] Should be allowed to take the course again.\n")
-else:
-    print("[FAIL] he should be able to take the course again even if he get grade F first time .\n")
+# print("TEST 2: Failed prerequisite (Nawaf wants COE301 and he has F):")
+# if system.validate_schedule("2210001", ["COE301"]):
+#     print("[PASS] Should be allowed to take the course again.\n")
+# else:
+#     print("[FAIL] he should be able to take the course again even if he get grade F first time .\n")
 
 # # ============================================================
 # # 3) Test full capacity (COE301 capacity = 1)
