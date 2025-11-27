@@ -30,11 +30,11 @@ class RegistrationSystem:
                                     student_id TEXT PRIMARY KEY NOT NULL ,
                                     name TEXT NOT NULL ,
                                     email TEXT NOT NULL CHECK (email LIKE '%_@__%.__%'),
-                                    password TEXT NOT NULL,
+                                    password TEXT NOT NULL, 
                                     program TEXT NOT NULL CHECK (program IN ('Computer', 'Power', 'Biomedical', 'Communication')),
                                     current_level INTEGER NOT NULL CHECK (current_level BETWEEN 1 AND 4)
                                 )''') #create Students table if it doesn't exist
-
+            
             self.cursor.execute('''CREATE TABLE IF NOT EXISTS Admin (
                                     admin_id TEXT PRIMARY KEY NOT NULL ,
                                     name TEXT NOT NULL ,
@@ -143,7 +143,7 @@ class RegistrationSystem:
                 print("Invalid program, Please select a valid program")
                 return
 
-
+            ## added parameter called password 
             self.cursor.execute('''INSERT INTO Students (student_id, name, email,password, program, current_level)
                                 VALUES (?, ?, ?, ?, ?, ?)''',
                                 (student.student_id, student.name, student.email,student.password, student.program, student.level)) #insert student data into Students table
@@ -170,9 +170,8 @@ class RegistrationSystem:
             self.connect=sqlite3.connect(self.db_name) #connect to the database
             self.cursor=self.connect.cursor()     #create a cursor object
 
-            self.cursor.execute('''INSERT INTO Admin (admin_id, name, email,password)
-                                VALUES (?, ?, ?, ?)''',
-                                (admin.admin_id, admin.name, admin.email,admin.password)) #insert admin data into Admin table
+        
+                
                 
             self.connect.commit() #commit the changes 
             print(f"Admin {admin.name} with ID {admin.adminid} added to database.")
@@ -462,7 +461,7 @@ class RegistrationSystem:
         finally:
             # Close the database connection
             self.connect.close()
-            
+           
     def view_transcript(self, student_id):
         try:
              # Open database connection
@@ -488,4 +487,4 @@ class RegistrationSystem:
         finally:
             self.connect.close()#close the connection
             
-system = RegistrationSystem()       
+system = RegistrationSystem()
