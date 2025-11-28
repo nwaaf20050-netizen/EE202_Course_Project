@@ -56,48 +56,22 @@ class RegistrationSystem:
           
             
             # Faculty Module Tables==================================================================
-            # Faculty table - stores basic faculty information
+            # Faculty table 
             self.cursor.execute('''
-                CREATE TABLE IF NOT EXISTS faculty (
-                    faculty_id TEXT PRIMARY KEY,
-                    name TEXT NOT NULL,
-                    email TEXT UNIQUE NOT NULL
+                CREATE TABLE IF NOT EXISTS Faculty (
+                      faculty_id TEXT PRIMARY KEY NOT NULL,
+                      name TEXT NOT NULL
                 )
             ''')
             
-            # Faculty preferences table - stores preferred courses for each faculty
+            # Links Course to Faculty
             self.cursor.execute('''
-                CREATE TABLE IF NOT EXISTS faculty_preferences (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    faculty_id TEXT,
-                    course_code TEXT,
-                    FOREIGN KEY (faculty_id) REFERENCES faculty(faculty_id),
-                    UNIQUE(faculty_id, course_code)
-                )
-            ''')
-            
-            # Faculty availability table - stores available time slots for each faculty
-            self.cursor.execute('''
-                CREATE TABLE IF NOT EXISTS faculty_availability (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    faculty_id TEXT,
-                    day TEXT,
-                    start_time TEXT,
-                    end_time TEXT,
-                    FOREIGN KEY (faculty_id) REFERENCES faculty(faculty_id)
-                )
-            ''')
-            
-            # Faculty assignments table - stores course assignments to faculty
-            self.cursor.execute('''
-                CREATE TABLE IF NOT EXISTS faculty_assignments (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    faculty_id TEXT,
-                    course_code TEXT,
-                    semester TEXT,
-                    FOREIGN KEY (faculty_id) REFERENCES faculty(faculty_id),
-                    FOREIGN KEY (course_code) REFERENCES Courses(course_code),
-                    UNIQUE(course_code, semester)
+                CREATE TABLE IF NOT EXISTS Assignments (
+                    assignment_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    course_code TEXT NOT NULL UNIQUE, 
+                    faculty_id TEXT NOT NULL,
+                    FOREIGN KEY(course_code) REFERENCES Courses(course_code),
+                    FOREIGN KEY(faculty_id) REFERENCES Faculty(faculty_id)
                 )
             ''')
 #=======================================================================================================
@@ -309,6 +283,64 @@ class RegistrationSystem:
         # Ensure the connection is closed
         if conn:
             conn.close()
+#for adding the faculty part ====================================================================
+    def add_faculty(self, faculty):
+    """Adds a Faculty object to the Faculty table."""
+    conn = None
+    try:
+        conn = sqlite3.connect(self.db_name)
+        cursor = conn.cursor()
+        
+        cursor.execute('''INSERT INTO Faculty (faculty_id, name) VALUES (?, ?)''', 
+                          (faculty.faculty_id, faculty.name))
+        conn.commit()
+        print(f"Faculty {faculty.name} added successfully.")
+    except sqlite3.IntegrityError:
+        print(f"Error: Faculty ID {faculty.faculty_id} already exists.")
+    except sqlite3.Error as e:
+        print(f"Database error while adding faculty: {e}")
+    finally:
+        if conn: conn.close()
+        
+
+def assign_course_to_faculty(self, course_code, faculty_id):
+    """
+    Assigns a course to a faculty member. 
+    Includes checks for existence and prevents re-assignment (conflict check).
+    """
+    conn = None
+    try:
+        conn = sqlite3.connect(self.db_name)
+        cursor = conn.cursor()
+        
+        # 1. Check if course and faculty exist
+        cursor.execute("SELECT COUNT(*) FROM Courses WHERE course_code = ?", (course_code,))
+        if cursor.fetchone()[0] == 0:
+            print(f"Assignment failed: Course {course_code} not found.")
+            return False
+            
+        cursor.execute("SELECT COUNT(*) FROM Faculty WHERE faculty_id = ?", (faculty_id,))
+        if cursor.fetchone()[0] == 0:
+            print(f"Assignment failed: Faculty {faculty_id} not found.")
+            return False
+
+        # 2. Perform assignment (UNIQUE constraint on course_code acts as conflict check)
+        cursor.execute("INSERT INTO Assignments (course_code, faculty_id) VALUES (?, ?)", (course_code, faculty_id))
+        conn.commit()
+        
+        print(f"SUCCESS: Course {course_code} assigned to Faculty {faculty_id}.")
+        return True
+    
+    except sqlite3.IntegrityError:
+        # This exception is triggered if the course_code already exists in the Assignments table
+        print(f"Assignment failed: Course {course_code} is already assigned to a faculty member (Conflict Check Passed).")
+        return False
+        
+    except sqlite3.Error as e:
+        print(f"Database error during assignment: {e}")
+        return False
+    finally:
+        if conn: conn.close()
 #================================================================================================================
         
     def delete_student(self, student_id):
