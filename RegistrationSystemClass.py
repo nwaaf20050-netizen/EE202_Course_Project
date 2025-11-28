@@ -53,7 +53,54 @@ class RegistrationSystem:
                                     FOREIGN KEY(course_code) REFERENCES Courses(course_code)
                                 );
                             ''') #create Enrollments table if it doesn't exist
-
+          
+            
+            # Faculty Module Tables==================================================================
+            # Faculty table - stores basic faculty information
+            self.cursor.execute('''
+                CREATE TABLE IF NOT EXISTS faculty (
+                    faculty_id TEXT PRIMARY KEY,
+                    name TEXT NOT NULL,
+                    email TEXT UNIQUE NOT NULL
+                )
+            ''')
+            
+            # Faculty preferences table - stores preferred courses for each faculty
+            self.cursor.execute('''
+                CREATE TABLE IF NOT EXISTS faculty_preferences (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    faculty_id TEXT,
+                    course_code TEXT,
+                    FOREIGN KEY (faculty_id) REFERENCES faculty(faculty_id),
+                    UNIQUE(faculty_id, course_code)
+                )
+            ''')
+            
+            # Faculty availability table - stores available time slots for each faculty
+            self.cursor.execute('''
+                CREATE TABLE IF NOT EXISTS faculty_availability (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    faculty_id TEXT,
+                    day TEXT,
+                    start_time TEXT,
+                    end_time TEXT,
+                    FOREIGN KEY (faculty_id) REFERENCES faculty(faculty_id)
+                )
+            ''')
+            
+            # Faculty assignments table - stores course assignments to faculty
+            self.cursor.execute('''
+                CREATE TABLE IF NOT EXISTS faculty_assignments (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    faculty_id TEXT,
+                    course_code TEXT,
+                    semester TEXT,
+                    FOREIGN KEY (faculty_id) REFERENCES faculty(faculty_id),
+                    FOREIGN KEY (course_code) REFERENCES Courses(course_code),
+                    UNIQUE(course_code, semester)
+                )
+            ''')
+#=======================================================================================================
             self.connect.commit() #commit the changes
         except sqlite3.Error as e:
             print(f"An error occurred while creating the tables: {e}")
