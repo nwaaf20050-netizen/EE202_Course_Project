@@ -4,32 +4,42 @@ from PyQt5.uic import loadUi
 
 import sys
 
-import RegistrationSystemClass
 
 class MainGuiTest(QMainWindow):
     def __init__(self):
+
         super(MainGuiTest,self).__init__()
+
+        # Load the UI file
         uic.loadUi("GUI_MainApp.ui",self)
-        self.setWindowTitle("GuiMaster Test")
+
+        self.setWindowTitle("Main Page")
+
+        # Connect the login button to its function
+        self.pushButton_Login.clicked.connect(self.loginButtonPressed)
         
-        self.pushButton_Login1.clicked.connect(self.buttonPressed)
 
-    def buttonPressed(self):
-        '''
-        method authentication
-        1 2
-        method(1,2)
-        '''
-    
-        print("Login Button Clicked")
-        print("asdgjklhgf")
-        #Opens a new window or performs login actions
-        pass
+    def loginButtonPressed(self):
 
+        # Get username and password from input fields
+        username = self.lineEdit_Username.text()
+        password = self.lineEdit_Password.text()
+
+        #Later you can add code to verify username and password
+
+        print(f"Username: {username}, Password: {password}")
+        
+        
 
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = MainGuiTest()
-    window.show()
-    sys.exit(app.exec_())
+
+
+
+
+
+#Initialize the app
+
+app = QtWidgets.QApplication(sys.argv)
+main_window = MainGuiTest()
+main_window.show()
+sys.exit(app.exec_())
