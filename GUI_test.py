@@ -5,10 +5,11 @@ from PyQt5.uic import loadUi
 import sys
 
 
-class MainGuiTest(QMainWindow):
+#================= Main Application Window =====================#
+class MainApp(QMainWindow):
     def __init__(self):
 
-        super(MainGuiTest,self).__init__()
+        super(MainApp,self).__init__()
 
         # Load the UI file
         uic.loadUi("GUI_MainApp.ui",self)
@@ -17,6 +18,7 @@ class MainGuiTest(QMainWindow):
 
         # Connect the login button to its function
         self.pushButton_Login.clicked.connect(self.loginButtonPressed)
+        self.pushButton_Close.clicked.connect(self.close)
         
 
     def loginButtonPressed(self):
@@ -29,6 +31,49 @@ class MainGuiTest(QMainWindow):
 
         print(f"Username: {username}, Password: {password}")
         
+        #Open Window after login
+        self.studentPage = StudentPage()
+        self.studentPage.show()
+
+        #hide the main window
+        self.hide()
+
+        #Close the login window
+        # self.close() #Don't use close() method here it will cause an error
+
+        
+    def close(self):
+        self.close()
+
+#================= Student Page Window =====================#
+        
+class StudentPage(QMainWindow):
+    def __init__(self):
+
+        super(StudentPage,self).__init__()
+
+        # Load the UI file
+        uic.loadUi("GUI_StudentPage.ui",self)
+
+        self.setWindowTitle("Student Page")
+
+        # Connect buttons to their functions
+        self.commandLinkButton_StudentProfile.clicked.connect(self.openStudentProfile)
+        self.commandLinkButton_CourseRegistration.clicked.connect(self.openCourseRegistration)
+        self.commandLinkButton_Logout.clicked.connect(self.logout)
+
+
+    def openStudentProfile(self):
+        pass  # Implement student profile functionality here
+
+    def openCourseRegistration(self):
+        pass  # Implement course registration functionality here
+
+    def logout(self):
+        self.mainApp = MainApp()
+        self.mainApp.show()
+        self.close()
+
         
 
 
@@ -40,6 +85,6 @@ class MainGuiTest(QMainWindow):
 #Initialize the app
 
 app = QtWidgets.QApplication(sys.argv)
-main_window = MainGuiTest()
+main_window = MainApp()
 main_window.show()
 sys.exit(app.exec_())
