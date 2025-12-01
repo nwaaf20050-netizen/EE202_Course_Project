@@ -1,7 +1,11 @@
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
+
+import loginvalidation
+
 import sys
+import time
 
 #================= Main Application Window =====================#
 class MainApp(QMainWindow):
@@ -28,24 +32,106 @@ class MainApp(QMainWindow):
         self.pushButton_Close.clicked.connect(self.closeApp)
 
 
+    def clearLoginText(self):
+        self.lineEdit_Username.setPlaceholderText("")
+        self.lineEdit_Password.setPlaceholderText("")
+
+    
+
     def loginButtonPressed(self):
+
         username = self.lineEdit_Username.text()
         password = self.lineEdit_Password.text()
 
         print(f"Username: {username}, Password: {password}")
+        
+        # login = loginvalidation.LoginSystem.login(username, password)
+        global instance_data , instance_status , instance_object
+        global instance_ID_number , instance_name , instance_email
+        global instance_program ,instance_level
+ 
+        
+        try:
+            instance_data = loginvalidation.system.login(username, password)
+            instance_status = instance_data[0]
+            instance_object = instance_data[1]
+
+            print(instance_data)
+            print(instance_status)
+
+
+            if instance_status == 'student':
+
+
+                instance_ID_number = instance_object.student_id
+                instance_name = instance_object.name
+                instance_email = instance_object.email
+                instance_program = instance_object.program
+                instance_level =  instance_object.level
+
+                self.hide()
+                self.studentPage.show()
+
+            
+            elif instance_status == 'admin':
+                instance_ID_number = instance_object.admin_id
+                instance_name = instance_object.name
+                instance_email = instance_object.email
+
+            elif instance_data != 'student' or instance_data != 'admin':
+                print('invalid returned')
+                self.lineEdit_Username.clear()
+                self.lineEdit_Password.clear()
+
+                self.lineEdit_Username.setPlaceholderText("Invalid login, try again.")
+                self.lineEdit_Password.setPlaceholderText("Invalid login, try again.")
+                print(f"Login failed: {e}")
+
+            
+            
+        except Exception as e:
+            self.lineEdit_Username.clear()
+            self.lineEdit_Password.clear()
+
+            self.lineEdit_Username.setPlaceholderText("Invalid login, try again.")
+            self.lineEdit_Password.setPlaceholderText("Invalid login, try again.")
+            print(f"Login failed: {e}")
+            
+            return
+
+
+                
+
+        # instance_name = loginvalidation.system.login(username, password)[1]
+        # instance_email = loginvalidation.system.login(username, password)[2]
+        # instance_program = loginvalidation.system.login(username, password)[3]
+        # instance_level = loginvalidation.system.login(username, password)[4]
+
+        
+        # print(instance_ID_number, "\n", instance_name, "\n", instance_email, "\n", instance_program, "\n", instance_level)
+        # print(login)
+
+
+        
 
         # Hide login and show student page (reuse instances)
-        self.hide()
-        self.studentPage.show()
+
+    def clearGlobalVariables(self):
+        instance_data, instance_status, instance_object = None, None, None
+        instance_ID_number, instance_name, instance_email, instance_program, instance_level = None, None, None, None, None
 
 
     def closeApp(self):
         # Properly quit the application
+        self.clearLoginText
+        self.clearGlobalVariables
         QApplication.quit()
 
 
     def closeEvent(self, event):
         # Override to quit the app when the main window closes (e.g., via X button)
+        self.clearLoginText
+        self.clearGlobalVariables
         QApplication.quit()
         event.accept()
 
@@ -58,7 +144,6 @@ class StudentPage(QMainWindow):
     def __init__(self, parent=None):
 
         super(StudentPage, self).__init__(parent)  # Set parent for proper parenting
-        
         # Load the UI file with error handling
         try:
             uic.loadUi("GUI_StudentPage.ui", self)
@@ -96,6 +181,7 @@ class StudentPage(QMainWindow):
 
     def logout(self):
         # Hide this window and show main app (reuse instance via parent)
+        
         self.hide()
         self.parent().show()  # Access parent (MainApp) and show it
 
@@ -123,21 +209,34 @@ class StudentProfile(QMainWindow):
 
     def displayInformation(self):
 
-        name = "Ahmed Afifi"  # Example name, replace with actual data retrieval logic
-        self.lineEdit_Name.setText(name)
+
+        # name = "Ahmed Afifi"  # Example name, replace with actual data retrieval logic
+        # self.lineEdit_Name.setText(name)
         
-        id_num = 2222222  # Example ID, replace with actual data retrieval logic
-        self.lineEdit_IDNumber.setText(str(id_num))
+        # id_num = 2222222  # Example ID, replace with actual data retrieval logic
+        # self.lineEdit_IDNumber.setText(str(id_num))
 
-        email = "aaaa@stu.kau.edu.sa"  # Example email, replace with actual data retrieval logic
-        self.lineEdit_Email.setText(email)
+        # email = "aaaa@stu.kau.edu.sa"  # Example email, replace with actual data retrieval logic
+        # self.lineEdit_Email.setText(email)
 
-        program = "Computer Engineering"  # Example program, replace with actual data retrieval logic
-        self.lineEdit_Program.setText(program)
+        # program = "Computer Engineering"  # Example program, replace with actual data retrieval logic
+        # self.lineEdit_Program.setText(program)
 
-        currentLevel = 3  # Example level, replace with actual data retrieval logic
-        self.lineEdit_CurrentLevel.setText(str(currentLevel))
+        # currentLevel = 3  # Example level, replace with actual data retrieval logic
+        # self.lineEdit_CurrentLevel.setText(str(currentLevel))
+        
 
+
+        # Example name, replace with actual data retrieval logic
+        self.lineEdit_Name.setText(instance_name)
+        
+        self.lineEdit_IDNumber.setText(str(instance_ID_number))
+
+        self.lineEdit_Email.setText(instance_email)
+
+        self.lineEdit_Program.setText(instance_program)
+
+        self.lineEdit_CurrentLevel.setText(str(instance_level))
 
     def goBack(self):
         # Hide this window and show student page (reuse instance via parent)
