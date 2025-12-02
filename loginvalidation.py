@@ -139,7 +139,8 @@ class LoginSystem:
                     )
                     self.connect.close()
                     ## return found object
-                    return ("student", fetched_student)
+                    # return ("student", fetched_student)
+                    return ["student", fetched_student]
 
                 ## if password isn't correct return message
                 self.connect.close()
@@ -166,15 +167,17 @@ class LoginSystem:
                         password=row[3]
                     )
                     self.connect.close()
-                    return ("admin", fetched_admin)
+                    # return ("admin", fetched_admin)
+                    return ["admin",fetched_admin]
 
                 self.connect.close()
                 ## if password is not correct return
-                return "Invalid ID or password."
+                # return "Invalid ID or password."
+                return ["invalid",None]
             
             ## if id is not student or admin return message
             self.connect.close()
-            return "Invalid ID or password."
+            return ["Invalid ID or password.",None]
         
         except Exception as exception:
             return f"login has failed: {exception}"
@@ -187,15 +190,12 @@ class LoginSystem:
 ### testing code 
 RegistrationSystem()
 
-student1 = Student(2444333,"abdulrahman","abdulrahman@gmail.com","@Aa123456","Power", 2)
-admin1 = Admin(2444123,"mohammed","mohammed@gmail.com","@Mm123456")
+# student1 = Student(2444333,"abdulrahman","abdulrahman@gmail.com","@Aa123456","Power", 2)
+# admin1 = Admin(2444123,"mohammed","mohammed@gmail.com","@Mm123456")
 
 system = LoginSystem()
 
-print(system.signup(student1))
-print(system.signup(admin1))
-
-print(system.login(student1.student_id, student1.password))
-print(system.login(admin1.admin_id, admin1.password))
-
+# print(system.signup(student1))
+# print(system.signup(admin1))
+# print(system.login(admin1.admin_id, admin1.password))
 

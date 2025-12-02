@@ -208,7 +208,7 @@ def seed_students():
     # 4 students for each program (levels 1–4)
     students_data = [
         # Computer
-        ("2210001", "Nawaf Alshamrani", "nawaf@example.com",'nawaf', "Computer", 1),
+        ("2210001", "Nawaf Alshamrani", "nawaf@example.com",'@Nawaf_1', "Computer", 1),
         ("2210002", "Fahad Alqahtani", "fahad@example.com","fahad", "Computer", 2),
         ("2210003", "Saud Alharbi", "saud@example.com","saud", "Computer", 3),
         ("2210004", "Turki Almutairi", "turki@example.com","turki", "Computer", 4),
@@ -258,4 +258,4 @@ def seed_students():
 
 system=RegistrationSystem()
 seed_students() 
-print(system.view_transcript("2213004"))
+print(system.view_transcript("2210002"))

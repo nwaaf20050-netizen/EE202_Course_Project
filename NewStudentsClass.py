@@ -24,7 +24,7 @@ class Student():
 
             cursor.execute("""
                 SELECT course_code, grade
-                FROM Transcripts
+                FROM transcripts
                 WHERE student_id = ?
             """, (self.student_id,)) # Fetch transcript entries for the student
 
@@ -67,6 +67,25 @@ class Student():
             self.transcript.append((course_code,grade))
         else:
             print(f"Invalid entry or course {course_code} already in transcript.")
+
+
+        conn = sqlite3.connect("RegistrationSystem.db")
+        cursor = conn.cursor()
+        cursor.execute(""" SELECT student_id FROM Students WHERE student_id = ? """, (self.student_id,)) # see if the student is in the data base
+
+        student_id = cursor.fetchone()
+        if student_id: # if the student in the database add to transcript
+            cursor.execute("""
+                INSERT INTO transcripts (student_id, course_code, grade)
+                VALUES (?, ?, ?)
+            """, (self.student_id, course_code, grade))
+            conn.commit()
+
       except Exception as e:
-            print("Error adding to transcript:", e)   
+            print("Error adding to transcript:", e)  
+      except sqlite3.Error as e:
+            print("Database error:", e) 
+      finally:
+            conn.close()
+
     
