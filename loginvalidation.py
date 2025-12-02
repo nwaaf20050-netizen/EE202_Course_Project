@@ -3,6 +3,24 @@ import re
 import bcrypt
 from RegistrationSystemClass import RegistrationSystem
 from NewStudentsClass import Student
+from datetime import datetime
+
+class Log: 
+    def __init__(self,id,role,date_time = datetime.now(),db_name="RegistrationSystem.db"):
+        self.id = id 
+        self.role = role
+        self.date_time = date_time
+
+        self.db_name = db_name
+        self.connect = sqlite3.connect(self.db_name)
+        self.cursor = self.connect.cursor()
+        
+        ## insert log to database
+        self.cursor.execute('''INSERT INTO Log (id, role, date_time)
+                                VALUES (?, ?, ?)''',
+                                (self.id,self.role,self.date_time))
+        self.connect.commit()
+        self.connect.close()
 
 
 class Admin:
@@ -18,6 +36,13 @@ class LoginSystem:
         self.db_name = db_name
         self.connect = sqlite3.connect(self.db_name)
         self.cursor = self.connect.cursor()
+
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS Log (
+                                    id TEXT NOT NULL,
+                                    role TEXT NOT NULL,
+                                    date_time TEXT NOT NULL)
+                                ''') #create Log table if it doesn't exist
+
 
     ## checking if password is strong function
     try: 
@@ -111,16 +136,17 @@ class LoginSystem:
 
 
     ######## login validation function 
-    def login(self, user_id, password):
+    def login(self, user_id_or_email, password):
         try:
             self.connect = sqlite3.connect(self.db_name)
             self.cursor = self.connect.cursor()
 
-                ## checking if entered id is student 
+                ## checking if entered id or email is student 
             self.cursor.execute(
-                "SELECT student_id, name, email, password, program, current_level FROM Students WHERE student_id=?",
-                (user_id,)
+                "SELECT student_id, name, email, password, program, current_level FROM Students WHERE student_id=? OR email=?", ### added or email here 
+                (user_id_or_email,user_id_or_email)
             )
+         
                 ## fetch from student database table if id is student and store in (row) variable
             row = self.cursor.fetchone()
 
@@ -138,19 +164,23 @@ class LoginSystem:
                         level=row[5],
                     )
                     self.connect.close()
+
+                    ## register log into the log database
+                    log = Log(fetched_student.student_id,"student")
+
                     ## return found object
                     # return ("student", fetched_student)
-                    return ["student", fetched_student]
+                    return ["student", fetched_student, log]
 
                 ## if password isn't correct return message
                 self.connect.close()
-                return "Invalid ID or password."
+                return ["Invalid ID or password.",None,None]
 
 
                 ## checking if entered id is admin
             self.cursor.execute(
-                "SELECT admin_id, name, email, password FROM Admin WHERE admin_id=?",
-                (user_id,)
+                "SELECT admin_id, name, email, password FROM Admin WHERE admin_id=? OR email=?",
+                (user_id_or_email,user_id_or_email)
             )
                 ## fetch from admin database table if id is admin and store in (row) variable
             row = self.cursor.fetchone()
@@ -166,21 +196,22 @@ class LoginSystem:
                         email=row[2],
                         password=row[3]
                     )
+                    log = Log(fetched_admin.admin_id,"admin")
                     self.connect.close()
                     # return ("admin", fetched_admin)
-                    return ["admin",fetched_admin]
+                    return ["admin",fetched_admin, log]
 
                 self.connect.close()
                 ## if password is not correct return
                 # return "Invalid ID or password."
-                return ["invalid",None]
+                return ["invalid",None,None]
             
             ## if id is not student or admin return message
             self.connect.close()
-            return ["Invalid ID or password.",None]
+            return ["Invalid ID or password.",None,None]
         
         except Exception as exception:
-            return f"login has failed: {exception}"
+            return [f"login has failed: {exception}",None,None]
         
         finally: 
             self.connect.close()
@@ -193,12 +224,9 @@ RegistrationSystem()
 student1 = Student(2444333,"abdulrahman","abdulrahman@gmail.com","@Aa123456","Power", 2)
 admin1 = Admin(2444123,"mohammed","mohammed@gmail.com","@Mm123456")
 
-# system = LoginSystem()
-
-# print(system.signup(student1))
-# print(system.signup(admin1))
-
-# print(system.login(student1.student_id, student1.password))
-# print(system.login(admin1.admin_id, admin1.password))
 system = LoginSystem()
 
+print(system.signup(student1))
+print(system.signup(admin1))
+
+x,y,z = system.login(student1.email,student1.password)
