@@ -193,9 +193,11 @@ RegistrationSystem()
 # student1 = Student(2444333,"abdulrahman","abdulrahman@gmail.com","@Aa123456","Power", 2)
 # admin1 = Admin(2444123,"mohammed","mohammed@gmail.com","@Mm123456")
 
-system = LoginSystem()
+# system = LoginSystem()
 
 # print(system.signup(student1))
 # print(system.signup(admin1))
-# print(system.login(admin1.admin_id, admin1.password))
 
+# print(system.login(student1.student_id, student1.password))
+# print(system.login(admin1.admin_id, admin1.password))
+system = LoginSystem()
