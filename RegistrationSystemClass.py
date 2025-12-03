@@ -896,6 +896,21 @@ class RegistrationSystem:
             (student_id,)
         )
         return cur.fetchone()
+    def get_student_schedule(self, student_id):
+        try:
+            conn=sqlite3.connect(self.db_name)
+            cur=conn.cursor()
+            cur.execute("SELECT course_code, section FROM Enrollments WHERE student_id=?",(student_id,))
+            courses_sections=cur.fetchall()
+            list_of_courses=[]
+            for courses,sections in courses_sections :
+                cur.execute("SELECT * FROM CourseSchedule WHERE course_code=? AND section=?",(courses,sections))
+                list_of_courses.append(cur.fetchone())
+                
+            return list_of_courses
+        except sqlite3.Error as e:
+            print(f"An error occurred while viewing Enrollments and CourseSchedule: {e}")
+            
 
 
 # Create a system instance when the module is imported
