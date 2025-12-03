@@ -69,8 +69,8 @@ class MainApp(QMainWindow):
                 instance_program = instance_object.program
                 instance_level =  instance_object.level
 
-                self.hide()
-                self.studentPage.show()
+                # self.hide()
+                # self.studentPage.show()
 
             
             elif instance_status == 'admin':
@@ -99,6 +99,8 @@ class MainApp(QMainWindow):
             
             return
 
+        self.hide()
+        self.studentPage.show()
 
                 
 
@@ -208,24 +210,6 @@ class StudentProfile(QMainWindow):
         self.pushButton_Back.clicked.connect(self.goBack)
 
     def displayInformation(self):
-
-
-        # name = "Ahmed Afifi"  # Example name, replace with actual data retrieval logic
-        # self.lineEdit_Name.setText(name)
-        
-        # id_num = 2222222  # Example ID, replace with actual data retrieval logic
-        # self.lineEdit_IDNumber.setText(str(id_num))
-
-        # email = "aaaa@stu.kau.edu.sa"  # Example email, replace with actual data retrieval logic
-        # self.lineEdit_Email.setText(email)
-
-        # program = "Computer Engineering"  # Example program, replace with actual data retrieval logic
-        # self.lineEdit_Program.setText(program)
-
-        # currentLevel = 3  # Example level, replace with actual data retrieval logic
-        # self.lineEdit_CurrentLevel.setText(str(currentLevel))
-        
-
 
         # Example name, replace with actual data retrieval logic
         self.lineEdit_Name.setText(instance_name)
