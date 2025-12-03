@@ -34,7 +34,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="lineEdit_CourseCode">
     <property name="geometry">
      <rect>
       <x>130</x>
@@ -50,7 +50,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="pushButton_CheckPrerequisites">
     <property name="geometry">
      <rect>
       <x>180</x>
@@ -66,7 +66,7 @@
      <string>Check for prerequisites</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="pushButton_AddCourse">
     <property name="geometry">
      <rect>
       <x>430</x>
@@ -82,7 +82,7 @@
      <string>Add the course</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="lineEdit_CourseName">
     <property name="geometry">
      <rect>
       <x>380</x>
@@ -98,7 +98,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_3">
+   <widget class="QLineEdit" name="lineEdit_CourseCredit">
     <property name="geometry">
      <rect>
       <x>640</x>
@@ -114,7 +114,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_4">
+   <widget class="QLineEdit" name="lineEdit_MaxCapacity">
     <property name="geometry">
      <rect>
       <x>640</x>
@@ -130,7 +130,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_5">
+   <widget class="QLineEdit" name="lineEdit_LectureHours">
     <property name="geometry">
      <rect>
       <x>130</x>
@@ -146,7 +146,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_6">
+   <widget class="QLineEdit" name="lineEdit_LabHours">
     <property name="geometry">
      <rect>
       <x>380</x>
@@ -276,7 +276,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox_2">
+   <widget class="QComboBox" name="comboBox_Level">
     <property name="geometry">
      <rect>
       <x>550</x>
@@ -347,7 +347,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QCheckBox" name="checkBox">
+   <widget class="QCheckBox" name="checkBox_Communication">
     <property name="geometry">
      <rect>
       <x>170</x>
@@ -363,7 +363,7 @@
      <string>Cummunication</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="checkBox_2">
+   <widget class="QCheckBox" name="checkBox_Biomedical">
     <property name="geometry">
      <rect>
       <x>170</x>
@@ -379,7 +379,7 @@
      <string>Biomedical</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="checkBox_3">
+   <widget class="QCheckBox" name="checkBox_Computer">
     <property name="geometry">
      <rect>
       <x>290</x>
@@ -395,7 +395,7 @@
      <string>Computer</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="checkBox_4">
+   <widget class="QCheckBox" name="checkBox_Power">
     <property name="geometry">
      <rect>
       <x>290</x>
@@ -418,7 +418,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
