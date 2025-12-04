@@ -33,7 +33,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="lineEdit_StudentID">
     <property name="geometry">
      <rect>
       <x>290</x>
@@ -46,7 +46,7 @@
      <string notr="true">font: 15pt &quot;Rockwell&quot;</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="lineEdit_FullName">
     <property name="geometry">
      <rect>
       <x>290</x>
@@ -59,7 +59,7 @@
      <string notr="true">font: 15pt &quot;Rockwell&quot;</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_3">
+   <widget class="QLineEdit" name="lineEdit_Password">
     <property name="geometry">
      <rect>
       <x>290</x>
@@ -72,7 +72,7 @@
      <string notr="true">font: 15pt &quot;Rockwell&quot;</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_4">
+   <widget class="QLineEdit" name="lineEdit_Email">
     <property name="geometry">
      <rect>
       <x>290</x>
@@ -85,7 +85,7 @@
      <string notr="true">font: 12pt &quot;Rockwell&quot;</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox">
+   <widget class="QComboBox" name="comboBox_Major">
     <property name="geometry">
      <rect>
       <x>290</x>
@@ -118,7 +118,7 @@
      </property>
     </item>
    </widget>
-   <widget class="QComboBox" name="comboBox_2">
+   <widget class="QComboBox" name="comboBox_Level">
     <property name="geometry">
      <rect>
       <x>290</x>
@@ -272,7 +272,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

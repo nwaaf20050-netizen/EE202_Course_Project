@@ -147,7 +147,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="lineEdit_IDNumber">
     <property name="geometry">
      <rect>
       <x>310</x>
@@ -163,7 +163,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="lineEdit_FirstName">
     <property name="geometry">
      <rect>
       <x>310</x>
@@ -179,7 +179,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_3">
+   <widget class="QLineEdit" name="lineEdit_Email">
     <property name="geometry">
      <rect>
       <x>310</x>
@@ -195,7 +195,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_4">
+   <widget class="QLineEdit" name="lineEdit_LastName">
     <property name="geometry">
      <rect>
       <x>310</x>
@@ -211,7 +211,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_5">
+   <widget class="QLineEdit" name="lineEdit_NewPassword">
     <property name="geometry">
      <rect>
       <x>310</x>
@@ -227,7 +227,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_6">
+   <widget class="QLineEdit" name="lineEdit_ConfirmPassword">
     <property name="geometry">
      <rect>
       <x>310</x>
@@ -243,7 +243,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="pushButton_AddAdmin">
     <property name="geometry">
      <rect>
       <x>310</x>
@@ -266,7 +266,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
