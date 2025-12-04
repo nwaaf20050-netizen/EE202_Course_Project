@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1166</width>
+    <height>841</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>20</y>
+      <width>571</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Rockwell</family>
+     </font>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:36pt; font-weight:600;&quot;&gt;Course Registration&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:36pt; font-weight:600;&quot;&gt;تسجيل المواد&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>250</y>
+      <width>741</width>
+      <height>401</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <widget class="QLabel" name="label_6">
+         <property name="font">
+          <font>
+           <family>Rockwell</family>
+          </font>
+         </property>
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:22pt;&quot;&gt;Add course&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:22pt;&quot;&gt;إضافة مادة&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="0" column="0">
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QLabel" name="label_2">
+             <property name="font">
+              <font>
+               <family>Adobe Heiti Std R</family>
+               <pointsize>15</pointsize>
+               <weight>50</weight>
+               <italic>false</italic>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">font: 15pt &quot;Adobe Heiti Std R&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Course Name أسم المادة</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_3">
+             <property name="font">
+              <font>
+               <family>Adobe Heiti Std R</family>
+               <pointsize>15</pointsize>
+               <weight>50</weight>
+               <italic>false</italic>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">font: 15pt &quot;Adobe Heiti Std R&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Couse Code رمز المادة</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_5">
+             <property name="styleSheet">
+              <string notr="true">font: 15pt &quot;Adobe Heiti Std R&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Section الشعبة</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_4">
+             <property name="styleSheet">
+              <string notr="true">font: 15pt &quot;Adobe Heiti Std R&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Cridits Hours عدد الساعات</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="0" column="1">
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QComboBox" name="comboBox"/>
+           </item>
+           <item>
+            <widget class="QComboBox" name="comboBox_2"/>
+           </item>
+           <item>
+            <widget class="QComboBox" name="comboBox_3"/>
+           </item>
+           <item>
+            <widget class="QComboBox" name="comboBox_4"/>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>Add Course إضافة المادة</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QLabel" name="label_7">
+         <property name="font">
+          <font>
+           <family>Rockwell</family>
+          </font>
+         </property>
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:22pt;&quot;&gt;Registered Courses&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:22pt;&quot;&gt;المواد المسجلة&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTableWidget" name="tableWidget">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>4</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <attribute name="horizontalHeaderCascadingSectionResizes">
+          <bool>false</bool>
+         </attribute>
+         <column>
+          <property name="text">
+           <string>Course Name</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Course Code </string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Section </string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Cridits Hours </string>
+          </property>
+         </column>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1166</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
