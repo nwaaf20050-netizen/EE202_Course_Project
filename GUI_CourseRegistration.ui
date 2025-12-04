@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>839</width>
-    <height>618</height>
+    <width>1066</width>
+    <height>649</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,602 +17,454 @@
    <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTableWidget" name="tableWidget">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>300</y>
-      <width>841</width>
-      <height>291</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Rockwell</family>
-      <pointsize>36</pointsize>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: rgb(0, 0, 0);
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="8" colspan="2">
+     <widget class="QCheckBox" name="checkBox_2">
+      <property name="text">
+       <string>Monday</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="7">
+     <widget class="QCheckBox" name="checkBox_5">
+      <property name="text">
+       <string>Wednesday</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="10">
+     <widget class="QCheckBox" name="checkBox_3">
+      <property name="text">
+       <string>Tuesday</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="3" rowspan="2">
+     <widget class="QLabel" name="label_5">
+      <property name="styleSheet">
+       <string notr="true">font: 9pt &quot;Rockwell&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Start Time:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1" rowspan="2" colspan="2">
+     <widget class="QLineEdit" name="lineEdit">
+      <property name="font">
+       <font>
+        <family>Rockwell</family>
+        <pointsize>12</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:12pt &quot;Rockwell&quot;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" rowspan="2">
+     <widget class="QLabel" name="label_2">
+      <property name="styleSheet">
+       <string notr="true">font: 9pt &quot;Rockwell&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Course ID :</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="7">
+     <widget class="QCheckBox" name="checkBox">
+      <property name="text">
+       <string>Sunday</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="0" colspan="11">
+     <widget class="QTableWidget" name="tableWidget">
+      <property name="font">
+       <font>
+        <family>Rockwell</family>
+        <pointsize>36</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);
 border-color: green;</string>
-    </property>
-    <row>
-     <property name="text">
-      <string/>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>Sunday</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>Monday</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>Tuesday</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>Wednesday</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>Thursday</string>
-     </property>
-    </row>
-    <column>
-     <property name="text">
-      <string>8:00 - 8:50</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>9:00 - 9:50</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>10:00 - 10:50</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>11:00 - 11:50</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>13:00 - 13:50</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>14:00 - 14:50</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>15:00 - 15:50</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>16:00 - 16:50</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>17:00 - 17:50</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>18:00 - 18:50</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>19:00 - 19:50</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>20:00 - 20:50</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>21:00 - 21:50</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>22:00 - 22:50</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>23:00 - 23:50</string>
-     </property>
-    </column>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit">
-    <property name="geometry">
-     <rect>
-      <x>110</x>
-      <y>80</y>
-      <width>151</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Rockwell</family>
-      <pointsize>12</pointsize>
-      <weight>50</weight>
-      <italic>false</italic>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font:12pt &quot;Rockwell&quot;</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
-    <property name="geometry">
-     <rect>
-      <x>110</x>
-      <y>140</y>
-      <width>151</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Rockwell</family>
-      <pointsize>12</pointsize>
-      <weight>50</weight>
-      <italic>false</italic>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="autoFillBackground">
-     <bool>false</bool>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font:12pt &quot;Rockwell&quot;</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_7">
-    <property name="geometry">
-     <rect>
-      <x>630</x>
-      <y>140</y>
-      <width>151</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Rockwell</family>
-      <pointsize>12</pointsize>
-      <weight>50</weight>
-      <italic>false</italic>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font:12pt &quot;Rockwell&quot;</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_8">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>200</y>
-      <width>151</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Rockwell</family>
-      <pointsize>12</pointsize>
-      <weight>50</weight>
-      <italic>false</italic>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font:12pt &quot;Rockwell&quot;</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_9">
-    <property name="geometry">
-     <rect>
-      <x>630</x>
-      <y>200</y>
-      <width>151</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Rockwell</family>
-      <pointsize>12</pointsize>
-      <weight>50</weight>
-      <italic>false</italic>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font:12pt &quot;Rockwell&quot;</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>170</x>
-      <y>20</y>
-      <width>531</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Rockwell</family>
-      <pointsize>36</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Schdules</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>80</y>
-      <width>91</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 9pt &quot;Rockwell&quot;;</string>
-    </property>
-    <property name="text">
-     <string>Course ID :</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>250</y>
-      <width>151</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(181, 181, 181);
+      </property>
+      <row>
+       <property name="text">
+        <string/>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>Sunday</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>Monday</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>Tuesday</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>Wednesday</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>Thursday</string>
+       </property>
+      </row>
+      <column>
+       <property name="text">
+        <string>8:00 - 8:50</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>9:00 - 9:50</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>10:00 - 10:50</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>11:00 - 11:50</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>13:00 - 13:50</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>14:00 - 14:50</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>15:00 - 15:50</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>16:00 - 16:50</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>17:00 - 17:50</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>18:00 - 18:50</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>19:00 - 19:50</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>20:00 - 20:50</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>21:00 - 21:50</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>22:00 - 22:50</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>23:00 - 23:50</string>
+       </property>
+      </column>
+     </widget>
+    </item>
+    <item row="6" column="4" colspan="2">
+     <widget class="QPushButton" name="pushButton">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(181, 181, 181);
 color: rgb(255, 255, 255);
 font: 12pt &quot;Rockwell&quot;;</string>
-    </property>
-    <property name="text">
-     <string>Add the course</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>130</y>
-      <width>121</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 8.5pt &quot;Rockwell&quot;;</string>
-    </property>
-    <property name="text">
-     <string>Number of sections:</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_4">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>200</y>
-      <width>91</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 9pt &quot;Rockwell&quot;;</string>
-    </property>
-    <property name="text">
-     <string>Lecture Type :</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_5">
-    <property name="geometry">
-     <rect>
-      <x>270</x>
-      <y>80</y>
-      <width>91</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 9pt &quot;Rockwell&quot;;</string>
-    </property>
-    <property name="text">
-     <string>Start Time:</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_6">
-    <property name="geometry">
-     <rect>
-      <x>270</x>
-      <y>140</y>
-      <width>91</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 9pt &quot;Rockwell&quot;;</string>
-    </property>
-    <property name="text">
-     <string>End Time :</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_7">
-    <property name="geometry">
-     <rect>
-      <x>490</x>
-      <y>80</y>
-      <width>161</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 9pt &quot;Rockwell&quot;;</string>
-    </property>
-    <property name="text">
-     <string>Days  :</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_8">
-    <property name="geometry">
-     <rect>
-      <x>530</x>
-      <y>200</y>
-      <width>91</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 9pt &quot;Rockwell&quot;;</string>
-    </property>
-    <property name="text">
-     <string>Room Number:</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_9">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>140</y>
-      <width>101</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 9pt &quot;Rockwell&quot;;</string>
-    </property>
-    <property name="text">
-     <string>Place ( Building ):</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_10">
-    <property name="geometry">
-     <rect>
-      <x>260</x>
-      <y>200</y>
-      <width>101</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 9pt &quot;Rockwell&quot;;</string>
-    </property>
-    <property name="text">
-     <string>Instructor Name:</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="comboBox">
-    <property name="geometry">
-     <rect>
-      <x>110</x>
-      <y>200</y>
-      <width>151</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 12pt &quot;Rockwell&quot;;</string>
-    </property>
-    <item>
-     <property name="text">
-      <string>LAB</string>
-     </property>
+      </property>
+      <property name="text">
+       <string>Add the course</string>
+      </property>
+     </widget>
     </item>
-    <item>
-     <property name="text">
-      <string>Lecture</string>
-     </property>
+    <item row="4" column="7">
+     <widget class="QLineEdit" name="lineEdit_9">
+      <property name="font">
+       <font>
+        <family>Rockwell</family>
+        <pointsize>12</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:12pt &quot;Rockwell&quot;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
     </item>
-    <item>
-     <property name="text">
-      <string>Online on BB</string>
-     </property>
+    <item row="4" column="6">
+     <widget class="QLabel" name="label_8">
+      <property name="styleSheet">
+       <string notr="true">font: 9pt &quot;Rockwell&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Room Number:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
     </item>
-    <item>
-     <property name="text">
-      <string>Tutorial</string>
-     </property>
+    <item row="3" column="7">
+     <widget class="QLineEdit" name="lineEdit_7">
+      <property name="font">
+       <font>
+        <family>Rockwell</family>
+        <pointsize>12</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:12pt &quot;Rockwell&quot;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
     </item>
-   </widget>
-   <widget class="QTimeEdit" name="timeEdit">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>80</y>
-      <width>151</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 12pt &quot;Rockwell&quot;;</string>
-    </property>
-   </widget>
-   <widget class="QTimeEdit" name="timeEdit_2">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>140</y>
-      <width>151</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 12pt &quot;Rockwell&quot;;</string>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="checkBox">
-    <property name="geometry">
-     <rect>
-      <x>630</x>
-      <y>80</y>
-      <width>70</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Sunday</string>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="checkBox_2">
-    <property name="geometry">
-     <rect>
-      <x>700</x>
-      <y>80</y>
-      <width>70</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Monday</string>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="checkBox_3">
-    <property name="geometry">
-     <rect>
-      <x>770</x>
-      <y>80</y>
-      <width>70</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Tuesday</string>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="checkBox_4">
-    <property name="geometry">
-     <rect>
-      <x>720</x>
-      <y>100</y>
-      <width>70</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Thursday</string>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="checkBox_5">
-    <property name="geometry">
-     <rect>
-      <x>630</x>
-      <y>100</y>
-      <width>81</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Wednesday</string>
-    </property>
-   </widget>
+    <item row="2" column="9" colspan="2">
+     <widget class="QCheckBox" name="checkBox_4">
+      <property name="text">
+       <string>Thursday</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="6">
+     <widget class="QLabel" name="label_9">
+      <property name="styleSheet">
+       <string notr="true">font: 9pt &quot;Rockwell&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Place ( Building ):</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="6" rowspan="2">
+     <widget class="QLabel" name="label_7">
+      <property name="styleSheet">
+       <string notr="true">font: 9pt &quot;Rockwell&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Days  :</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="4" rowspan="2" colspan="2">
+     <widget class="QTimeEdit" name="timeEdit">
+      <property name="styleSheet">
+       <string notr="true">font: 12pt &quot;Rockwell&quot;;</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0">
+     <widget class="QLabel" name="label_4">
+      <property name="styleSheet">
+       <string notr="true">font: 9pt &quot;Rockwell&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Lecture Type :</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="3">
+     <widget class="QLabel" name="label_10">
+      <property name="styleSheet">
+       <string notr="true">font: 9pt &quot;Rockwell&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Instructor Name:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="4" colspan="2">
+     <widget class="QTimeEdit" name="timeEdit_2">
+      <property name="styleSheet">
+       <string notr="true">font: 12pt &quot;Rockwell&quot;;</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QComboBox" name="comboBox">
+      <property name="styleSheet">
+       <string notr="true">font: 12pt &quot;Rockwell&quot;;</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>LAB</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Lecture</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Online on BB</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Tutorial</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="label_3">
+      <property name="styleSheet">
+       <string notr="true">font: 8.5pt &quot;Rockwell&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Number of sections:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLineEdit" name="lineEdit_2">
+      <property name="font">
+       <font>
+        <family>Rockwell</family>
+        <pointsize>12</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:12pt &quot;Rockwell&quot;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="4">
+     <widget class="QLineEdit" name="lineEdit_8">
+      <property name="font">
+       <font>
+        <family>Rockwell</family>
+        <pointsize>12</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:12pt &quot;Rockwell&quot;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="3">
+     <widget class="QLabel" name="label_6">
+      <property name="styleSheet">
+       <string notr="true">font: 9pt &quot;Rockwell&quot;;</string>
+      </property>
+      <property name="text">
+       <string>End Time :</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2" colspan="6">
+     <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <family>Rockwell</family>
+        <pointsize>36</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Schdules&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>839</width>
+     <width>1066</width>
      <height>21</height>
     </rect>
    </property>
