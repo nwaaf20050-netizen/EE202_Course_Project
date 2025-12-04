@@ -319,8 +319,12 @@ class AdminPage(QMainWindow):
         self.setWindowTitle("Admin Page")
         self.AdminProfile = AdminProfile(parent=self)
         self.addStudent = add_student(parent=self)
+        # self.addFaculty = add_faculty(parent=self)
+        self.addCourse = add_course2(parent=self)
+        # self.addSchdules = add_schdules(parent=self)
+        # Connect buttons to their functions
         self.pushButton_AddStudent.clicked.connect(self.add_student)
-        self.pushButton_AddCourse.clicked.connect(self.add_course)
+        self.pushButton_AddCourse.clicked.connect(self.add_Course)
         self.pushButton_AddFaculty.clicked.connect(self.add_faculty)
         self.pushButton_AddSchedule.clicked.connect(self.add_schdules)
         self.pushButton_AdminProfile.clicked.connect(self.adminProfile)
@@ -341,11 +345,14 @@ class AdminPage(QMainWindow):
         pass
     def add_student(self):
         self.hide()
-        self.addStudent.add_student()
+        # self.addStudent.add_student()
         self.addStudent.show()
 
-    def add_course():
-        pass
+    def add_Course(self):
+        self.hide()
+        # self.addCourse.addition_course()
+        self.addCourse.show()
+
     def add_faculty():
         pass
 
@@ -390,23 +397,81 @@ class add_student(QMainWindow):
     def goBack(self):
         self.hide()
         self.parent().show()
-    #================= Nawaf_Addition_probelm =====================#
+
+
     def add_student(self):
         student_id = self.lineEdit_StudentID.text()
         name = self.lineEdit_FullName.text()
         email = self.lineEdit_Email.text().strip()
         password = self.lineEdit_Password.text()
         program = self.comboBox_Major.currentText()
-        level = self.comboBox_Level.currentText()
+        level = str(self.comboBox_Level.currentText())
         student = Student(student_id, name, email, password, program, level)
         self.registration.add_student(student)
         self.result.setText("Student added successfully")
-    #================= Nawaf_Addition_probelm =====================#
 
 
+# class add_faculty(QMainWindow):
+#     def __init__(self, parent=None):
+#         super(add_faculty, self).__init__(parent)
+#         try:
+#             uic.loadUi("Faculty.ui", self)
+#         except FileNotFoundError:
+#             print("Error: Faculty.ui not found. Please ensure the file exists")
+#             sys.exit(1)
         
+#         self.setWindowTitle("Add Faculty")
+#         self.pushButton_Back.clicked.connect(self.goBack)
+#         self.pushButton_Add.clicked.connect(self.add_faculty)
+#     def goBack(self):
+#         self.hide()
+#         self.parent().show()
+#     def add_faculty(self):
+#         name=self.lineEdit_Name.text()
+#         email=self.lineEdit_Email.text()
+#         password=self.lineEdit_Password.text() 
+#         ID= self.lineEdit_ID.text()
+#         pass
 
+
+class add_course2(QMainWindow):
+        def __init__(self, parent=None):
+            super(add_course2, self).__init__(parent)
+            try:
+                uic.loadUi("GUI_AddingNewCourse.ui", self)
+            except FileNotFoundError:
+                print("Error: GUI_AddingNewCourse.ui not found. Please ensure the file exists")
+                sys.exit(1)
+            self.registration=RegistrationSystem()
+            self.setWindowTitle("Add Course")
+            self.pushButton_Back.clicked.connect(self.goBack)
+            self.pushButton_AddCourse.clicked.connect(self.addition_course)
+        def goBack(self):
+            self.hide()
+            self.parent().show()
+
+        def addition_course(self):
+            course_code = self.lineEdit_CourseCode.text()
+            course_name = self.lineEdit_CourseName.text()
+            credit_hours = (self.lineEdit_CourseCredit.text())
+            lecture_hours = (self.lineEdit_LectureHours.text())
+            lab_hours = (self.lineEdit_LabHours.text())
+            prerequisites = self.lineEdit_Prerequisites.text()
+            max_capacity = (self.lineEdit_MaxCapacity.text())
+            level = (self.comboBox_Level.currentText())
+            program = []
+            if self.checkBox_Communication.isChecked():
+                program.append(self.checkBox_Communication.text())
+            if self.checkBox_Computer.isChecked():
+                program.append(self.checkBox_Computer.text())
+            if self.checkBox_Power.isChecked():
+                program.append(self.checkBox_Power.text())    
+            if self.checkBox_Biomedical.isChecked():
+                program.append(self.checkBox_Biomedical.text())
             
+            course = Course(course_code, course_name, int(credit_hours), int(lecture_hours), int(lab_hours), prerequisites, int(max_capacity),program , int(level))
+            self.registration.add_course(course)
+                
 #================= Nawaf_Addition =====================#
 
 
