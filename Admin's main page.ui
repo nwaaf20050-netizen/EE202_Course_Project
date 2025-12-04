@@ -33,7 +33,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="pushButton_AdminProfile">
     <property name="geometry">
      <rect>
       <x>280</x>
@@ -49,7 +49,7 @@
      <string>The admin's profile</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="pushButton_AddSchedule">
     <property name="geometry">
      <rect>
       <x>280</x>
@@ -65,7 +65,7 @@
      <string>Adding schdules</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="pushButton_AddCourse">
     <property name="geometry">
      <rect>
       <x>280</x>
@@ -81,7 +81,7 @@
      <string>Adding new course</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="pushButton_AddStudent">
     <property name="geometry">
      <rect>
       <x>280</x>
@@ -97,7 +97,7 @@
      <string>Adding students</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_5">
+   <widget class="QPushButton" name="pushButton_AddFaculty">
     <property name="geometry">
      <rect>
       <x>280</x>
@@ -120,7 +120,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

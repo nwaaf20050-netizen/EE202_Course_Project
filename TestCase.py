@@ -1,6 +1,6 @@
 from RegistrationSystemClass import RegistrationSystem
 from NewCourseClass import Course
-
+from loginvalidation import Admin
 
 def seed_courses():
     system = RegistrationSystem()
@@ -211,7 +211,7 @@ def seed_students():
         ("2210001", "Nawaf Alshamrani", "nawaf@example.com",'@Nawaf_1', "Computer", 1),
         ("2210002", "Fahad Alqahtani", "fahad@example.com","fahad", "Computer", 2),
         ("2210003", "Saud Alharbi", "saud@example.com","saud", "Computer", 3),
-        ("2210004", "Turki Almutairi", "turki@example.com","turki", "Computer", 4),
+        ("2210004", "Turki Almutairi", "turki@example.com","Turki@1", "Computer", 4),
 
         # Power
         ("2211001", "Abdullah Alsubaie", "abdullah@example.com","abdullah", "Power", 1),
@@ -258,4 +258,5 @@ def seed_students():
 
 system=RegistrationSystem()
 seed_students() 
+system.add_admin(Admin("22222","Nawaf Alshamrani","Nawaf42@gmail.com","@Nawaf_1"))
 print(system.view_transcript("2210002"))

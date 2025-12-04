@@ -260,16 +260,16 @@ class RegistrationSystem:
         try:
             self.connect = sqlite3.connect(self.db_name)
             self.cursor = self.connect.cursor()
-
+            password_hash = bcrypt.hashpw(admin.password.encode(), bcrypt.gensalt())
             # Insert admin data
             self.cursor.execute('''
                 INSERT INTO Admin (admin_id, name, email, password)
                 VALUES (?, ?, ?, ?)
             ''',
-            (admin.admin_id, admin.name, admin.email, admin.password))
+            (admin.admin_id, admin.name, admin.email, password_hash))
 
             self.connect.commit()
-            print(f"Admin {admin.name} with ID {admin.adminid} added to database.")
+            print(f"Admin {admin.name} with ID {admin.admin_id} added to database.")
         except sqlite3.IntegrityError as e:
             print(f"An integrity error occurred while adding the admin: {e}")
         except sqlite3.Error as e:
