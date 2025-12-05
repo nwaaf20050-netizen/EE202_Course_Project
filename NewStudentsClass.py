@@ -1,6 +1,4 @@
 # StudentClass.py
-# Represents a student model with attributes and methods to manage student data.
-# from NewUserClass import User 
 import sqlite3
 
 class Student():  

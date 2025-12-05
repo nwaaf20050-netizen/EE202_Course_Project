@@ -22,7 +22,7 @@ import sqlite3
 #
 # Lecture Type:
 #   - Allowed:
-#         ["Lecture", "Lab", "Online"]
+#         ["Lecture", "Lab", "Online","Tutorial"]
 #   - Default = "Lecture"
 #
 # Instructor:
@@ -42,7 +42,7 @@ class Schedule:
 
     # Allowed choices for validation
     ALLOWED_DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu"]
-    ALLOWED_TYPES = ["Lecture", "Lab", "Online"]
+    ALLOWED_TYPES = ["Lecture", "Lab", "Online","Tutorial"]
 
     def __init__(
         self,
@@ -78,7 +78,7 @@ class Schedule:
 #         ✔ Allowed days
 #         ✔ Allowed lecture types
 #         ✔ Time format "HH:MM"
-#         ✔ Instructor must exist in Admin table
+#         ✔ Instructor must exist in Faculty table
 #
 #   - Generating alphabetical section labels (A,B,C,…)
 #
@@ -184,7 +184,7 @@ class ScheduleSystem:
 
 
     # ------------------------------------------------------------
-    # Validate instructor exists in Admin table
+    # Validate instructor exists in Faculty table
     # ------------------------------------------------------------
     def validate_instructor(self, instructor_name, num_sections):
         try:
@@ -210,14 +210,14 @@ class ScheduleSystem:
             for inst in instructors_to_check:
 
                 cur.execute(
-                    "SELECT admin_id FROM Admin WHERE name=?",
+                    "SELECT faculty_id FROM Faculty WHERE name=?",
                     (inst,)
                 )
                 row = cur.fetchone()
 
                 if row is None:
                     raise ValueError(
-                        f"Instructor '{inst}' does not exist in Admin table. "
+                        f"Instructor '{inst}' does not exist in Faculty table. "
                         "Add the instructor before assigning."
                     )
 
@@ -341,7 +341,7 @@ class ScheduleSystem:
                     conn2 = sqlite3.connect(self.db_name)
                     cur2 = conn2.cursor()
 
-                    cur2.execute("SELECT admin_id FROM Admin WHERE name=?", (instr_name,))
+                    cur2.execute("SELECT faculty_id FROM Faculty WHERE name=?", (instr_name,))
                     row = cur2.fetchone()
                     conn2.close()
 
