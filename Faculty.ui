@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>0</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,7 +33,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="lineEdit_Name">
     <property name="geometry">
      <rect>
       <x>340</x>
@@ -49,7 +49,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="lineEdit_I">
     <property name="geometry">
      <rect>
       <x>340</x>
@@ -103,11 +103,11 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="pushButton_Add">
     <property name="geometry">
      <rect>
-      <x>314</x>
-      <y>412</y>
+      <x>310</x>
+      <y>380</y>
       <width>161</width>
       <height>61</height>
      </rect>
@@ -119,6 +119,22 @@
      <string>Confirm</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton_Back">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>460</y>
+      <width>161</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 15pt &quot;Rockwell&quot;</string>
+    </property>
+    <property name="text">
+     <string>Back</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -126,7 +142,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
