@@ -22,7 +22,7 @@ import sqlite3
 #
 # Lecture Type:
 #   - Allowed:
-#         ["Lecture", "Lab", "Online","Tutorial"]
+#         ["Lecture", "Lab", "Online"]
 #   - Default = "Lecture"
 #
 # Instructor:
@@ -42,7 +42,7 @@ class Schedule:
 
     # Allowed choices for validation
     ALLOWED_DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu"]
-    ALLOWED_TYPES = ["Lecture", "Lab", "Online","Tutorial"]
+    ALLOWED_TYPES = ["Lecture", "Lab", "Online"]
 
     def __init__(
         self,
@@ -78,7 +78,7 @@ class Schedule:
 #         ✔ Allowed days
 #         ✔ Allowed lecture types
 #         ✔ Time format "HH:MM"
-#         ✔ Instructor must exist in Faculty table
+#         ✔ Instructor must exist in Admin table
 #
 #   - Generating alphabetical section labels (A,B,C,…)
 #
@@ -184,7 +184,7 @@ class ScheduleSystem:
 
 
     # ------------------------------------------------------------
-    # Validate instructor exists in Faculty table
+    # Validate instructor exists in Admin table
     # ------------------------------------------------------------
     def validate_instructor(self, instructor_name, num_sections):
         try:
@@ -217,7 +217,7 @@ class ScheduleSystem:
 
                 if row is None:
                     raise ValueError(
-                        f"Instructor '{inst}' does not exist in Faculty table. "
+                        f"Instructor '{inst}' does not exist in Admin table. "
                         "Add the instructor before assigning."
                     )
 
@@ -286,7 +286,7 @@ class ScheduleSystem:
                 """
                 SELECT start_time, end_time, days, lecture_type
                 FROM CourseSchedule
-                WHERE course_code=? AND num_sections=?
+                WHERE course_code=? AND section=?
                 """,
                 (schedule.course_code, schedule.num_sections)
             )
@@ -352,9 +352,9 @@ class ScheduleSystem:
                     """
                     INSERT INTO CourseSchedule
                         (course_code, section, start_time, end_time,
-                         lecture_type, instructor_name, instructor_id,
+                         lecture_type, instructor_name,
                          days, place, room)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """,
                     (
                         schedule.course_code,
@@ -363,7 +363,6 @@ class ScheduleSystem:
                         schedule.end_time,
                         schedule.lecture_type,
                         instr_name,
-                        instructor_id,
                         days_str,
                         schedule.place,
                         room_value
@@ -423,16 +422,6 @@ class ScheduleSystem:
 
         finally:
             conn.close()
-
-    # ------------------------------------------------------------
-    # Update schedule by course id 
-    # ------------------------------------------------------------
-    # def update_schedule(self, course_code):
-    #     conn=sqlite3.connect(self.db_name)
-    #     cur=conn.cursor()
-
-    #     cur.execute("""UPDATE """
-
 
 
 
