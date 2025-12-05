@@ -30,6 +30,8 @@ class RegistrationSystem:
         - Admin
         - transcripts
         - Enrollments
+        - Faculty
+        - CourseSchedule
         """
         try:
             # Create Courses table (course catalog)
@@ -128,12 +130,14 @@ class RegistrationSystem:
             self.connect = sqlite3.connect(self.db_name)
             self.cursor = self.connect.cursor()
 
+            password_hash = bcrypt.hashpw(faculty.password.encode(), bcrypt.gensalt())
+
             ## insert faculty object to database
             self.cursor.execute('''
                 INSERT INTO Faculty (faculty_id,name,email,password)
                 VALUES (?, ?, ?, ?)
             ''',
-            (faculty.faculty_id,faculty.name,faculty.email,faculty.password))
+            (faculty.faculty_id,faculty.name,faculty.email,password_hash))
 
             self.connect.commit()
             print(f"Faculty {faculty.name} with code {faculty.faculty_id} added to database.")

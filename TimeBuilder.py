@@ -424,6 +424,16 @@ class ScheduleSystem:
         finally:
             conn.close()
 
+    # ------------------------------------------------------------
+    # Update schedule by course id 
+    # ------------------------------------------------------------
+    # def update_schedule(self, course_code):
+    #     conn=sqlite3.connect(self.db_name)
+    #     cur=conn.cursor()
+
+    #     cur.execute("""UPDATE """
+
+
 
 
 # ============================================================

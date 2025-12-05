@@ -61,7 +61,7 @@
       </property>
       <property name="font">
        <font>
-        <family>Rockwell</family>
+        <family>Segoe UI</family>
        </font>
       </property>
       <property name="cursor">
@@ -88,7 +88,7 @@
       </property>
       <property name="font">
        <font>
-        <family>Rockwell</family>
+        <family>Segoe UI</family>
        </font>
       </property>
       <property name="text">
@@ -106,14 +106,14 @@
       </property>
       <property name="font">
        <font>
-        <family>Rockwell</family>
+        <family>Segoe UI</family>
        </font>
       </property>
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="text">
-       <string>Coure Registration | تسجيل المواد</string>
+       <string>Course Registration | تسجيل المواد</string>
       </property>
      </widget>
     </item>
@@ -127,7 +127,7 @@
       </property>
       <property name="font">
        <font>
-        <family>Rockwell</family>
+        <family>Segoe UI</family>
        </font>
       </property>
       <property name="cursor">
@@ -146,7 +146,7 @@
      <x>0</x>
      <y>0</y>
      <width>360</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

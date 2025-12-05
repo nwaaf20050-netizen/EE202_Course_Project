@@ -321,12 +321,12 @@ class AdminPage(QMainWindow):
         self.addStudent = add_student(parent=self)
         # self.addFaculty = add_faculty(parent=self)
         self.addCourse = add_course2(parent=self)
-        # self.addSchdules = add_schdules(parent=self)
+        self.addSchdules = addSchdules(parent=self)
         # Connect buttons to their functions
         self.pushButton_AddStudent.clicked.connect(self.add_student)
         self.pushButton_AddCourse.clicked.connect(self.add_Course)
         self.pushButton_AddFaculty.clicked.connect(self.add_faculty)
-        self.pushButton_AddSchedule.clicked.connect(self.add_schdules)
+        self.pushButton_AddSchedule.clicked.connect(self.addition_schdules)
         self.pushButton_AdminProfile.clicked.connect(self.adminProfile)
        
     #     self.pushButton_Logout.clicked.connect(self.logout)
@@ -341,8 +341,10 @@ class AdminPage(QMainWindow):
         self.AdminProfile.show()
 
 
-    def add_schdules():
-        pass
+    def addition_schdules(self):
+        self.hide()
+        self.addSchdules.show()
+
     def add_student(self):
         self.hide()
         # self.addStudent.add_student()
@@ -353,7 +355,7 @@ class AdminPage(QMainWindow):
         # self.addCourse.addition_course()
         self.addCourse.show()
 
-    def add_faculty():
+    def add_faculty(self):
         pass
 
 class AdminProfile(QMainWindow):
@@ -471,6 +473,66 @@ class add_course2(QMainWindow):
             
             course = Course(course_code, course_name, int(credit_hours), int(lecture_hours), int(lab_hours), prerequisites, int(max_capacity),program , int(level))
             self.registration.add_course(course)
+
+class addSchdules(QMainWindow):
+    def __init__(self, parent=None):
+        super(addSchdules, self).__init__(parent)
+        try:
+            uic.loadUi("GUI_Schdules.ui", self)
+        except FileNotFoundError:
+            print("Error: GUI_Schdules.ui not found. Please ensure the file exists")
+            sys.exit(1)
+        self.setWindowTitle("Add Schedule")
+        self.pushButton_Back.clicked.connect(self.goBack)
+        self.pushButton_Add.clicked.connect(self.adding_schedule)
+        self.schudules=ScheduleSystem()
+    def goBack(self):
+        self.hide()
+        self.parent().show()
+    
+    def adding_schedule(self):
+        self.course_code=self.lineEdit_CourseCode.text()
+        self.numSections=self.lineEdit_numSections.text()
+        self.start=self.timeEdit_start.time().toString("HH:mm")
+        self.end=self.timeEdit_end.time().toString("HH:mm") 
+        print(self.start)
+        print(self.end)
+        self.lecture_type=self.comboBox_LectureType.currentText()
+        
+        if self.lineEdit_InstructorName.text() =="":
+            self.instructor_name=None
+        else:
+            self.instructor_name=self.lineEdit_InstructorName.text()
+
+        if self.lineEdit_place.text() =="":
+            self.place=None
+        else:
+            self.place=self.lineEdit_place.text()
+
+        if self.lineEdit_room.text() =="":
+            self.room= None
+        else:
+            self.room=self.lineEdit_room.text()
+        self.days=[]
+        if self.checkBox_mon.isChecked():
+            self.days.append(self.checkBox_mon.text())
+        if self.checkBox_tue.isChecked():
+            self.days.append(self.checkBox_tue.text())
+        if self.checkBox_wed.isChecked():
+            self.days.append(self.checkBox_wed.text())
+        if self.checkBox_thurs.isChecked():
+            self.days.append(self.checkBox_thurs.text()) 
+        if self.checkBox_sun.isChecked():
+            self.days.append(self.checkBox_sun.text())
+        Schedule_oject=Schedule(self.course_code,self.numSections,self.start,self.end,self.lecture_type,self.instructor_name,self.place,self.room,self.days)
+        self.schudules.add_schedule(Schedule_oject)
+
+
+
+        
+
+
+
                 
 #================= Nawaf_Addition =====================#
 
