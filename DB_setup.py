@@ -1,10 +1,15 @@
 from RegistrationSystemClass import RegistrationSystem
 from NewCourseClass import Course
 from loginvalidation import Admin
+from TimeBuilder import Schedule
+from TimeBuilder import ScheduleSystem
+from FacultyClass import Faculty
+from FacultyModule import FacultyAdminModule
 
+
+################### seeding courses
 def seed_courses():
     system = RegistrationSystem()
-
     courses = [
 
         # ===== Level 1 – Shared foundation courses (no prerequisites) =====
@@ -50,6 +55,15 @@ def seed_courses():
             ["Computer"],
             2
         ),
+
+        Course(
+            "CPE250",
+            "Digital Logic Design",
+            3, 3, 1,
+            ["CIR101"], 40,
+            ["Computer"],
+            2
+        ),
         Course(
             "CPE301",
             "Microprocessors and Interfacing",
@@ -70,6 +84,14 @@ def seed_courses():
         # ===== Power Engineering – program specific =====
         Course(
             "PWE201",
+            "Introduction to Power Systems",
+            3, 3, 0,
+            ["CIR101"], 40,
+            ["Power"],
+            2
+        ),
+        Course(
+            "PWE250",
             "Introduction to Power Systems",
             3, 3, 0,
             ["CIR101"], 40,
@@ -103,6 +125,14 @@ def seed_courses():
             2
         ),
         Course(
+            "BME250",
+            "Biomedical Signals and Systems",
+            3, 3, 0,
+            ["CIR101"], 40,
+            ["Biomedical"],
+            2
+        ),
+        Course(
             "BME301",
             "Medical Instrumentation",
             3, 3, 1,
@@ -129,6 +159,14 @@ def seed_courses():
             2
         ),
         Course(
+            "COM250",
+            "Signals and Systems",
+            3, 3, 0,
+            ["CIR101"], 40,
+            ["Communication"],
+            2
+        ),
+        Course(
             "COM301",
             "Digital Communication",
             3, 3, 0,
@@ -145,16 +183,69 @@ def seed_courses():
             4
         ),
     ]
-
     for course in courses:
         # This will use your RegistrationSystem.add_course logic
         system.add_course(course)
+    print("Sucuessfully added courses")
+
+################# seeding faculty
+def seed_faculty():
+    faculty = RegistrationSystem()
+
+    faculty_data = [
+        Faculty(10001,"Dr.Omar","Omar_O@example.com","@Oo112233"),
+        Faculty(10002,"Dr.Mohammed","Mohammed_M@example.com","@Mm112233"),
+        Faculty(10003,"Dr.Khalid","Khalid_K@example.com","@Kk112233"),
+        Faculty(10004,"Dr.Ahmad","Ahmad_A@example.com","@Aa112233")
+
+    ]
+    for f in faculty_data:
+        faculty.add_faculty(f)
+
+    print("faculty 4 members added")
 
 
+##### seeding schedule 
+def seed_schedule():
+        courseschedule_data = [
+        
+        ## general courses
+        Schedule("ENG101", 2, '08:00','10:00',["Sun","Tue","Thu"], "Lecture", "Dr.Omar","ENG40","107"),
+        Schedule("MATH101", 2, '10:00','11:00',["Sun","Tue","Thu"], "Lecture", "Dr.Mohammed","ENG40","106"),
+        Schedule("PHYS101", 2, '11:00','12:00',["Mon","Wed"], "Lecture", "Dr.Khalid","ENG40","105"),
+        Schedule("CIR101", 2, '01:00','02:00',["Sun","Tue","Thu"], "Lecture", "Dr.Khalid","ENG40","107"),
 
-seed_courses()
-print("Seeding finished: 16 courses inserted (with shared and program-specific courses).")
 
+        ## computer courses
+        Schedule("CPE201", 2, '08:00','10:00',["Sun","Tue","Thu"], "Lecture", "Dr.Omar","ENG40","108"),
+        Schedule("CPE250", 2, '08:00','10:00',["Sun","Tue","Thu"], "Lecture", "Dr.Ahmad","ENG40","108"),
+        Schedule("CPE301", 2, '09:00','11:00',["Sun","Tue","Thu"], "Lecture", "Dr.Mohammed","ENG40","104"),
+        Schedule("CPE401", 2, '11:00','12:00',['Mon','Wed'], "Lecture", "Dr.Khalid","ENG40","102"),
+
+        # power courses
+
+        Schedule("PWE201", 2, '10:00','12:00',['Sun','Tue','Thu'], "Lecture", "Dr.Omar","ENG40","107"),
+        Schedule("PWE250", 2, '09:00','11:00',['Sun','Tue','Thu'], "Lecture", "Dr.Ahmad","ENG40","108"),
+        Schedule("PWE301", 2, '11:00','02:00',['Sun','Tue','Thu'], "Lecture", "Dr.Mohammed","ENG40","104"),
+        Schedule("PWE401", 2, '11:00','02:00',['Mon','Wed'], "Lecture", "Dr.Khalid","ENG40","102"),
+
+        ## biomedical courses
+        Schedule("BME201", 2, '10:00','12:00',["Sun","Tue","Thu"], "Lecture", "Dr.Omar","ENG40","107"),
+        Schedule("BME250", 2, '09:00','11:00',['Sun','Tue','Thu'], "Lecture", "Dr.Ahmad","ENG40","108"),
+        Schedule("BME301", 2, '01:00','03:00',['Sun','Tue','Thu'], "Lecture", "Dr.Omar","ENG40","104"),
+        Schedule("BME401", 2, '11:00','02:00',['Mon','Wed'], "Lecture", "Dr.Omar","ENG40","105"),
+
+        Schedule("COM201", 2, '10:00','12:00',['Sun','Tue','Thu'], "Lecture", "Dr.Omar","ENG40","102"),
+        Schedule("COM250", 2, '09:00','11:00',['Sun','Tue','Thu'], "Lecture", "Dr.Ahmad","ENG40","108"),
+        Schedule("COM301", 2, '01:00','03:00',['Sun','Tue','Thu'], "Lecture", "Dr.Omar","ENG40","104"),
+        Schedule("COM401", 2, '11:00','02:00',['Mon','Wed'], "Lecture", "Dr.Omar","ENG40","103"),
+        ]
+
+        schedule_builder = ScheduleSystem()
+        for schedule in courseschedule_data:
+            schedule_builder.add_schedule(schedule)
+
+        print("Course 16 Schedule added")
 
 
 import sqlite3
@@ -247,16 +338,56 @@ def seed_students():
             level,
             transcript_list  # pass transcript directly
         )
-
         # add student + transcript through the system
         system.add_student(student)
 
-    print("🔥 Successfully added 16 students + transcripts!")
+    print("Successfully added 16 students + transcripts!")
+
+def seed_admin():
+    system = RegistrationSystem()
+    admin_data = [
+        ("22220", "Mohammed Alzahrani", "Mohammed_S@example.com",'@Mm112233'),
+        ("22221", "Khalid Alsulami", "Khalid_S@example.com","@Kk112233"),
+        ("22222", "Abdulaziz Alharbi", "Abdulaziz_H@example.com","@Aa112233"),
+        ("22223", "Ahmad Almutairi", "Ahmad_M@example.com","@Aa112233"),    
+    ]
+    for admin_id, name, email,password, in admin_data:
+        admin = Admin(
+            admin_id,
+            name,
+            email,
+            password
+        )
+
+        # add admin through the system
+        system.add_admin(admin)
+
+    print("Successfully added 4 admins")
+############ seeding enrollements
+
+def seed_enrollments():
+    system = RegistrationSystem()
+    enrollments = [
+        ("2210002", [("ENG101", "A"), ("MATH101", "B")]),
+        ("2210003", [("CIR101", "B")]),
+        ("2211002", [("ENG101", "A"), ("PHYS101", "B")]),
+        ("2212003", [("BME201", "B")]),
+        ("2213004", [("COM201", "A")]),
+    ]
+    
+    for student_id, courses in enrollments:
+        print(f"Registering {student_id}...")
+        system.register_student(student_id, courses)
+
+    print("Enrollments seeded successfully.")
 
 
 
 
 system=RegistrationSystem()
-seed_students() 
-system.add_admin(Admin("22222","Nawaf Alshamrani","Nawaf42@gmail.com","@Nawaf_1"))
-print(system.view_transcript("2210002"))
+# seed_students() 
+# seed_faculty()
+# seed_admin()
+# seed_courses()
+# seed_schedule()
+seed_enrollments()

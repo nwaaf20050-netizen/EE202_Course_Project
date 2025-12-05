@@ -5,7 +5,9 @@ from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from RegistrationSystemClass import RegistrationSystem
 from NewStudentsClass import Student
 from NewCourseClass import Course
+from FacultyClass import Faculty
 from TimeBuilder import Schedule, ScheduleSystem
+from PyQt5.QtCore import QLocale
 #================= Nawaf_Addition =====================#
 import loginvalidation
 import time
@@ -172,6 +174,7 @@ class StudentPage(QMainWindow):
         self.studentProfile = StudentProfile(parent=self)  # Parent: StudentPage
         #================= Nawaf_Addition =====================#
         self.showTranscripts = ViewTranscripts(parent=self) # Parent: ViewTranscripts
+        self.courseRegistration = CourseRegistration(parent=self)
         #================= Nawaf_Addition =====================#
         # Connect buttons to their functions
         self.commandLinkButton_StudentProfile.clicked.connect(self.openStudentProfile)
@@ -196,7 +199,12 @@ class StudentPage(QMainWindow):
 
 
     def openCourseRegistration(self):
-        pass # Implement course registration functionality here
+        self.hide()
+        self.courseRegistration.show_data()
+        self.courseRegistration.show()
+        
+    
+        # Implement course registration functionality here
 
 
     def logout(self):
@@ -255,19 +263,53 @@ class CourseRegistration(QMainWindow):
         super(CourseRegistration, self).__init__(parent)  # Set parent for proper parenting
         # Load the UI file with error handling
         try:
-            uic.loadUi("GUI_CourseRegistration.ui", self)
+            uic.loadUi("GUI_Student Course Registration.ui", self)
         except FileNotFoundError:
-            print("Error: GUI_CourseRegistration.ui not found. Please ensure the file exists.")
+            print("Error: GUI_Student Course Registration.ui not found. Please ensure the file exists.")
             sys.exit(1)
-        
+        self.registraion=RegistrationSystem()
         self.setWindowTitle("Course Registration")
+        self.pushButton_Back.clicked.connect(self.goBack)
+        self.pushButton.clicked.connect(self.register)
+
+
     def goBack(self):
         # Hide this window and show student page (reuse instance via parent)
         self.hide()
         self.parent().show()  # Access parent (StudentPage) and show it
 
-    def registerCourse(self):
-        pass
+    def show_data(self):
+
+        results=self.registraion.get_available_courses(instance_ID_number)
+        model = QStandardItemModel()
+        model.setHorizontalHeaderLabels(["Course Code","course_name","Credit Hours" ])
+        for row in results:
+            
+            items = [QStandardItem(str(x)) for x in row]
+            model.appendRow(items)
+    
+
+        self.tableView.setModel(model)
+        # registred courses
+        results1=self.registraion.get_student_schedule(instance_ID_number)
+        model1 = QStandardItemModel()
+        
+        model1.setHorizontalHeaderLabels(["Course Code","course_name", "Grade","Credit Hours" ])
+        for row1 in results1:
+            
+            items1 = [QStandardItem(str(x1)) for x1 in row1]
+            model1.appendRow(items1)
+
+        self.tableView_2.setModel(model1)
+    def register(self):
+       self.code=self.lineEdit_code.text()
+       self.section=self.lineEdit_section.text()
+       list_of_courses=[(self.code,self.section)]
+       self.registraion.register_student(instance_ID_number,list_of_courses)
+
+
+
+        
 
 #================= View Transcripts =====================#
 class ViewTranscripts(QMainWindow,):
@@ -319,7 +361,7 @@ class AdminPage(QMainWindow):
         self.setWindowTitle("Admin Page")
         self.AdminProfile = AdminProfile(parent=self)
         self.addStudent = add_student(parent=self)
-        # self.addFaculty = add_faculty(parent=self)
+        self.addFaculty = add_faculty(parent=self)
         self.addCourse = add_course2(parent=self)
         self.addSchdules = addSchdules(parent=self)
         # Connect buttons to their functions
@@ -329,10 +371,10 @@ class AdminPage(QMainWindow):
         self.pushButton_AddSchedule.clicked.connect(self.addition_schdules)
         self.pushButton_AdminProfile.clicked.connect(self.adminProfile)
        
-    #     self.pushButton_Logout.clicked.connect(self.logout)
-    # def logout(self):
-    #     self.hide()
-    #     self.parent().show()
+        self.pushButton_Logout.clicked.connect(self.logout)
+    def logout(self):
+        self.hide()
+        self.parent().show()
 
 
     def adminProfile(self):
@@ -356,7 +398,10 @@ class AdminPage(QMainWindow):
         self.addCourse.show()
 
     def add_faculty(self):
-        pass
+        self.hide()
+        # self.addFaculty.add_faculty()
+        self.addFaculty.show()
+
 
 class AdminProfile(QMainWindow):
     def __init__(self, parent=None):
@@ -413,27 +458,31 @@ class add_student(QMainWindow):
         self.result.setText("Student added successfully")
 
 
-# class add_faculty(QMainWindow):
-#     def __init__(self, parent=None):
-#         super(add_faculty, self).__init__(parent)
-#         try:
-#             uic.loadUi("Faculty.ui", self)
-#         except FileNotFoundError:
-#             print("Error: Faculty.ui not found. Please ensure the file exists")
-#             sys.exit(1)
+class add_faculty(QMainWindow):
+    def __init__(self, parent=None):
+        super(add_faculty, self).__init__(parent)
+        try:
+            uic.loadUi("GUI_add_Faculty.ui", self)
+        except FileNotFoundError:
+            print("Error: GUI_add_Faculty.ui not found. Please ensure the file exists")
+            sys.exit(1)
+        self.registration=RegistrationSystem()
+        self.setWindowTitle("Add Faculty")
+        self.pushButton_Back.clicked.connect(self.goBack)
+        self.pushButton_Add.clicked.connect(self.add_faculty)
+    def goBack(self):
+        self.hide()
+        self.parent().show()
+    def add_faculty(self):
+        name=self.lineEdit_Name.text()
+        email=self.lineEdit_email.text()
+        password=self.lineEdit_password.text() 
+        faculty_id= self.lineEdit_id.text()
+        faculty=Faculty(faculty_id,name,email,password)
+        self.registration.add_faculty(faculty)
+
         
-#         self.setWindowTitle("Add Faculty")
-#         self.pushButton_Back.clicked.connect(self.goBack)
-#         self.pushButton_Add.clicked.connect(self.add_faculty)
-#     def goBack(self):
-#         self.hide()
-#         self.parent().show()
-#     def add_faculty(self):
-#         name=self.lineEdit_Name.text()
-#         email=self.lineEdit_Email.text()
-#         password=self.lineEdit_Password.text() 
-#         ID= self.lineEdit_ID.text()
-#         pass
+        
 
 
 class add_course2(QMainWindow):
@@ -486,6 +535,12 @@ class addSchdules(QMainWindow):
         self.pushButton_Back.clicked.connect(self.goBack)
         self.pushButton_Add.clicked.connect(self.adding_schedule)
         self.schudules=ScheduleSystem()
+        english_locale = QLocale(QLocale.English)
+        self.timeEdit_start.setLocale(english_locale)
+        self.timeEdit_end.setLocale(english_locale)
+        self.timeEdit_start.setDisplayFormat("HH:mm")
+        self.timeEdit_end.setDisplayFormat("HH:mm")
+
     def goBack(self):
         self.hide()
         self.parent().show()
@@ -493,10 +548,19 @@ class addSchdules(QMainWindow):
     def adding_schedule(self):
         self.course_code=self.lineEdit_CourseCode.text()
         self.numSections=self.lineEdit_numSections.text()
-        self.start=self.timeEdit_start.time().toString("HH:mm")
-        self.end=self.timeEdit_end.time().toString("HH:mm") 
-        print(self.start)
-        print(self.end)
+        
+        # self.start=self.timeEdit_start.setLocale(QLocale(QLocale.English, QLocale.UnitedStates))
+        # self.start=self.timeEdit_start.setDisplayFormat("HH:mm")
+        # self.end=self.timeEdit_end.setLocale(QLocale(QLocale.English, QLocale.UnitedStates))
+        # self.end=self.timeEdit_end.setDisplayFormat("HH:mm")
+        # self.start=self.timeEdit_start.time().toString("HH:mm")
+        # self.end=self.timeEdit_end.time().toString("HH:mm") 
+        # self.start = self.timeEdit_start.time().toString("HH:mm")
+        # self.end = self.timeEdit_end.time().toString("HH:mm")
+        self.start=self.timeEdit_start.text()
+        self.end=self.timeEdit_end.text()
+
+    
         self.lecture_type=self.comboBox_LectureType.currentText()
         
         if self.lineEdit_InstructorName.text() =="":
@@ -514,17 +578,22 @@ class addSchdules(QMainWindow):
         else:
             self.room=self.lineEdit_room.text()
         self.days=[]
-        if self.checkBox_mon.isChecked():
-            self.days.append(self.checkBox_mon.text())
-        if self.checkBox_tue.isChecked():
-            self.days.append(self.checkBox_tue.text())
-        if self.checkBox_wed.isChecked():
-            self.days.append(self.checkBox_wed.text())
-        if self.checkBox_thurs.isChecked():
-            self.days.append(self.checkBox_thurs.text()) 
+
         if self.checkBox_sun.isChecked():
-            self.days.append(self.checkBox_sun.text())
-        Schedule_oject=Schedule(self.course_code,self.numSections,self.start,self.end,self.lecture_type,self.instructor_name,self.place,self.room,self.days)
+            self.days.append('Sun')
+
+        if self.checkBox_mon.isChecked():
+            self.days.append('Mon')
+
+        if self.checkBox_tue.isChecked():
+            self.days.append('Tue')
+
+        if self.checkBox_wed.isChecked():
+            self.days.append('Wed')
+
+        if self.checkBox_thurs.isChecked():
+            self.days.append('Thu')
+        Schedule_oject=Schedule(self.course_code,int(self.numSections),self.start,self.end,self.days,self.lecture_type,self.instructor_name,self.place,self.room,)
         self.schudules.add_schedule(Schedule_oject)
 
 

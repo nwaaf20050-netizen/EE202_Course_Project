@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>0</height>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>90</x>
+      <x>110</x>
       <y>40</y>
       <width>601</width>
       <height>61</height>
@@ -27,39 +27,7 @@
      <string notr="true">font: 36pt &quot;Rockwell&quot;</string>
     </property>
     <property name="text">
-     <string>Faculty</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_Name">
-    <property name="geometry">
-     <rect>
-      <x>340</x>
-      <y>160</y>
-      <width>281</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 15pt &quot;Rockwell&quot;</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_I">
-    <property name="geometry">
-     <rect>
-      <x>340</x>
-      <y>280</y>
-      <width>281</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 15pt &quot;Rockwell&quot;</string>
+     <string>Add Faculty</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -69,7 +37,7 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>160</y>
+      <y>140</y>
       <width>281</width>
       <height>51</height>
      </rect>
@@ -78,7 +46,23 @@
      <string notr="true">font: 15pt &quot;Rockwell&quot;</string>
     </property>
     <property name="text">
-     <string>The instructor's name:</string>
+     <string>The instructor's Name:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_Name">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>140</y>
+      <width>281</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 15pt &quot;Rockwell&quot;</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -87,8 +71,8 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>280</y>
+      <x>40</x>
+      <y>210</y>
       <width>281</width>
       <height>51</height>
      </rect>
@@ -103,11 +87,27 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
+   <widget class="QLineEdit" name="lineEdit_id">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>210</y>
+      <width>281</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 15pt &quot;Rockwell&quot;</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
    <widget class="QPushButton" name="pushButton_Add">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>380</y>
+      <x>400</x>
+      <y>450</y>
       <width>161</width>
       <height>61</height>
      </rect>
@@ -122,8 +122,8 @@
    <widget class="QPushButton" name="pushButton_Back">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>460</y>
+      <x>100</x>
+      <y>450</y>
       <width>161</width>
       <height>61</height>
      </rect>
@@ -133,6 +133,76 @@
     </property>
     <property name="text">
      <string>Back</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_password">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>350</y>
+      <width>281</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 15pt &quot;Rockwell&quot;</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_email">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>280</y>
+      <width>281</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 15pt &quot;Rockwell&quot;</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>280</y>
+      <width>281</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 15pt &quot;Rockwell&quot;</string>
+    </property>
+    <property name="text">
+     <string>The instructor's Email:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>340</y>
+      <width>291</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 15pt &quot;Rockwell&quot;</string>
+    </property>
+    <property name="text">
+     <string>The instructor's Password:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
   </widget>
@@ -146,6 +216,7 @@
     </rect>
    </property>
   </widget>
+  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>

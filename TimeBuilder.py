@@ -156,10 +156,10 @@ class ScheduleSystem:
     # ------------------------------------------------------------
     def validate_days(self, days):
         try:
-            for d in days:
-                if d not in Schedule.ALLOWED_DAYS:
+            for day in days:
+                if day not in Schedule.ALLOWED_DAYS:
                     raise ValueError(
-                        f"Invalid day '{d}'. Allowed days: {Schedule.ALLOWED_DAYS}"
+                        f"Invalid day '{day}'. Allowed days: {Schedule.ALLOWED_DAYS}"
                     )
         except ValueError as e:
             print(e)
@@ -286,9 +286,9 @@ class ScheduleSystem:
                 """
                 SELECT start_time, end_time, days, lecture_type
                 FROM CourseSchedule
-                WHERE course_code=? AND num_sections=?
+                WHERE course_code=? AND section=?
                 """,
-                (schedule.course_code, schedule.num_sections)
+                (schedule.course_code, labels[0])
             )
             existing_shapes = cur.fetchall()
 
@@ -316,8 +316,8 @@ class ScheduleSystem:
                             f"CONFLICT WITHIN PACKAGE (section {schedule.num_sections}): "
                             f"{schedule.course_code} {schedule.lecture_type} conflicts with existing {e_type}\n"
                             f"Days: {days_text}\n"
-                            f"New: {schedule.start_time}–{schedule.end_time}\n"
-                            f"Existing: {e_start}–{e_end}"
+                            f"New: {schedule.start_time}-{schedule.end_time}\n"
+                            f"Existing: {e_start}-{e_end}"
                         )
 
             # Insert each section individually
@@ -335,26 +335,14 @@ class ScheduleSystem:
                     else schedule.room
                 )
 
-                # Resolve instructor_id (safe because validated earlier)
-                instructor_id = None
-                if instr_name:
-                    conn2 = sqlite3.connect(self.db_name)
-                    cur2 = conn2.cursor()
-
-                    cur2.execute("SELECT faculty_id FROM Faculty WHERE name=?", (instr_name,))
-                    row = cur2.fetchone()
-                    conn2.close()
-
-                    instructor_id = row[0]
-
                 # Insert final section row
                 cur.execute(
                     """
                     INSERT INTO CourseSchedule
                         (course_code, section, start_time, end_time,
-                         lecture_type, instructor_name, instructor_id,
+                         lecture_type, instructor_name,
                          days, place, room)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """,
                     (
                         schedule.course_code,
@@ -363,7 +351,6 @@ class ScheduleSystem:
                         schedule.end_time,
                         schedule.lecture_type,
                         instr_name,
-                        instructor_id,
                         days_str,
                         schedule.place,
                         room_value

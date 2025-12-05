@@ -837,8 +837,8 @@ class RegistrationSystem:
             print(f"Error in validate_schedule: {e}")
             return False
 
-        finally:
-            self.connect.close()
+        # finally:
+        #     self.connect.close()
 
     def register_student(self, student_id, chosen_course_sections):
         """
@@ -949,6 +949,8 @@ class RegistrationSystem:
             self.cursor.execute("DROP TABLE IF EXISTS Courses")
             self.cursor.execute("DROP TABLE IF EXISTS Students")
             self.cursor.execute("DROP TABLE IF EXISTS Admin")
+            self.cursor.execute("DROP TABLE IF EXISTS Faculty")
+            
 
             self.connect.commit()
 

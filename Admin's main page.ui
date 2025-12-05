@@ -110,7 +110,23 @@
      <string notr="true">font: 15pt &quot;Rockwell&quot;</string>
     </property>
     <property name="text">
-     <string>The Faculty</string>
+     <string>adding Faculty</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_Logout">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>440</y>
+      <width>221</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 15pt &quot;Rockwell&quot;</string>
+    </property>
+    <property name="text">
+     <string>Logout</string>
     </property>
    </widget>
   </widget>
