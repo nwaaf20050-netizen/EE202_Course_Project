@@ -30,6 +30,8 @@ class RegistrationSystem:
         - Admin
         - transcripts
         - Enrollments
+        - Faculty
+        - CourseSchedule
         """
         try:
             # Create Courses table (course catalog)
@@ -123,18 +125,19 @@ class RegistrationSystem:
             self.connect.commit()
         except sqlite3.Error as e:
             print(f"An error occurred while creating the tables: {e}")
-
     def add_faculty(self,faculty):
         try:
             self.connect = sqlite3.connect(self.db_name)
             self.cursor = self.connect.cursor()
+
+            password_hash = bcrypt.hashpw(faculty.password.encode(), bcrypt.gensalt())
 
             ## insert faculty object to database
             self.cursor.execute('''
                 INSERT INTO Faculty (faculty_id,name,email,password)
                 VALUES (?, ?, ?, ?)
             ''',
-            (faculty.faculty_id,faculty.name,faculty.email,faculty.password))
+            (faculty.faculty_id,faculty.name,faculty.email,password_hash))
 
             self.connect.commit()
             print(f"Faculty {faculty.name} with code {faculty.faculty_id} added to database.")
@@ -303,6 +306,7 @@ class RegistrationSystem:
 
         finally:
             self.connect.close()
+
 
 
     def add_course(self, course):
@@ -833,8 +837,6 @@ class RegistrationSystem:
             print(f"Error in validate_schedule: {e}")
             return False
 
-        finally:
-            self.connect.close()
 
     def register_student(self, student_id, chosen_course_sections):
         """
@@ -881,9 +883,6 @@ class RegistrationSystem:
         except sqlite3.Error as e:
             print(f"An error occurred while registering student: {e}")
             return False
-
-        finally:
-            self.connect.close()
 
 
     def delete_student(self, student_id):
