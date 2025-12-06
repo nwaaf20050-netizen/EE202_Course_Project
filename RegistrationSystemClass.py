@@ -307,7 +307,43 @@ class RegistrationSystem:
         finally:
             self.connect.close()
 
+    def is_course_in_preferences(self, faculty_id, course_code):
+        
+        ##Checks if the course schedule fits within faculty availability/preferences.
+        try:
+            self.connect = sqlite3.connect(self.db_name)
+            self.cursor = self.connect.cursor()
 
+            # Get faculty availability
+            self.cursor.execute("SELECT availability FROM Faculty WHERE faculty_id=?", (faculty_id,))
+            row = self.cursor.fetchone()
+            if not row or not row[0]:
+                return True  # No availability set → allow assignment
+
+            availability = row[0].split(",")  # Assuming stored as "Sun 11:00-13:00, Tue 11:00-13:00"
+            
+            # Get course schedule(s)
+            self.cursor.execute("""
+                SELECT start_time, end_time, days 
+                FROM CourseSchedule 
+                WHERE course_code=?
+            """, (course_code,))
+            schedules = self.cursor.fetchall()
+
+            for start_time, end_time, days in schedules:
+                course_times = [d.strip() + " " + start_time + "-" + end_time for d in days.split(",")]
+                # If none of the course times fit in availability, reject
+                if not any(ct in availability for ct in course_times):
+                    return False
+
+            return True
+
+        except sqlite3.Error as e:
+            print("Error checking preferences:", e)
+            return False
+
+        finally:
+            self.connect.close()
 
     def add_course(self, course):
         """

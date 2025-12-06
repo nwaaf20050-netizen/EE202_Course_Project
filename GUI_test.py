@@ -8,6 +8,9 @@ from NewCourseClass import Course
 from FacultyClass import Faculty
 from TimeBuilder import Schedule, ScheduleSystem
 from PyQt5.QtCore import QLocale
+from AnalyticsModule import Analytics
+from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
+from PyQt5.QtWidgets import QMainWindow, QApplication, QVBoxLayout, QWidget
 #================= Nawaf_Addition =====================#
 import loginvalidation
 import time
@@ -441,12 +444,14 @@ class AdminPage(QMainWindow):
         self.addFaculty = add_faculty(parent=self)
         self.addCourse = add_course2(parent=self)
         self.addSchdules = addSchdules(parent=self)
+        self.ShowEnrollment=Show_Erollment_data(parent=self)
         # Connect buttons to their functions
         self.pushButton_AddStudent.clicked.connect(self.add_student)
         self.pushButton_AddCourse.clicked.connect(self.add_Course)
         self.pushButton_AddFaculty.clicked.connect(self.add_faculty)
         self.pushButton_AddSchedule.clicked.connect(self.addition_schdules)
         self.pushButton_AdminProfile.clicked.connect(self.adminProfile)
+        self.pushButton_Enrollment.clicked.connect(self.Show_Enrollment)
        
         self.pushButton_Logout.clicked.connect(self.logout)
     def logout(self):
@@ -478,6 +483,10 @@ class AdminPage(QMainWindow):
         self.hide()
         # self.addFaculty.add_faculty()
         self.addFaculty.show()
+    def Show_Enrollment(self):
+        self.hide()
+        self.ShowEnrollment.show()
+
 
 
 class AdminProfile(QMainWindow):
@@ -672,6 +681,62 @@ class addSchdules(QMainWindow):
             self.days.append('Thu')
         Schedule_oject=Schedule(self.course_code,int(self.numSections),self.start,self.end,self.days,self.lecture_type,self.instructor_name,self.place,self.room,)
         self.schudules.add_schedule(Schedule_oject)
+
+class Show_Erollment_data(QMainWindow):
+    def __init__(self, parent=None):
+        super(Show_Erollment_data, self).__init__(parent)
+    
+        try:
+            uic.loadUi("GUI_AnalyticsModule.ui", self)
+        except FileNotFoundError:
+            print("Error: GUI_AnalyticsModule.ui not found. Please ensure the file exists")
+        self.setWindowTitle("Show Enrollment")
+        self.registration=RegistrationSystem()
+        self.analytics = Analytics(self.registration)
+        self.canvas = None
+        
+        self.btn_showChart.clicked.connect(self.display_fill_rate_chart)
+        self.pushButton_Back.clicked.connect(self.goBack)    
+        
+        
+    def display_fill_rate_chart(self):
+        course_code=self.lineEdit_courseCode.text()
+        # Get the filled canvas from analytics module
+        canvas = self.analytics.calculate_section_chart(course_code)
+        if canvas is None:
+            print("No data available for chart visualization")
+            self.label_M.setText("No data available for chart visualization")
+            return
+        
+        # Remove old canvas if exists (Refresh)
+        if self.canvas:
+            self.chartFrame.layout().removeWidget(self.canvas)
+            self.canvas.deleteLater()
+        
+        self.canvas = canvas
+        
+        # If frame has no layout -> create one
+        if not self.chartFrame.layout():
+            layout = QVBoxLayout(self.chartFrame)
+            self.chartFrame.setLayout(layout)
+        else:
+            layout = self.chartFrame.layout()
+        
+        # Add Toolbar + Chart to layout
+        toolbar = NavigationToolbar(self.canvas, self)
+        layout.addWidget(toolbar)
+        layout.addWidget(self.canvas)
+        
+        # Redraw chart
+        self.canvas.draw()
+        self.label_M.setText("The graph was successfully drawn")
+    def goBack(self):
+        self.hide()
+        self.parent().show()
+        self.label_M.setText("")
+        self.lineEdit_courseCode.setText("")
+        self.canvas = None
+
 
 
 
