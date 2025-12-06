@@ -574,13 +574,6 @@ class RegistrationSystem:
                 # --- Skip if course already passed ---
                 if course_code in passed:
                     continue
-                # --- Skip if already enrolled in this course ---
-                self.cursor.execute(
-                    "SELECT 1 FROM Enrollments WHERE student_id=? AND course_code=?",
-                    (student_id, course_code)
-                )
-                if self.cursor.fetchone():
-                    continue
 
 
                 # --- Build prerequisite list ---
@@ -629,6 +622,15 @@ class RegistrationSystem:
                     place,
                     room
                 ) in sections_info:
+                    
+                    # Skip sections the student is already enrolled in
+                    self.cursor.execute(
+                        "SELECT 1 FROM Enrollments WHERE student_id=? AND course_code=? AND section=?",
+                        (student_id, course_code, section)
+                    )
+                    if self.cursor.fetchone():
+                        continue
+
 
                     # Count how many students are enrolled in this section
                     self.cursor.execute(
