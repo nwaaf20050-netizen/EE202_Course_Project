@@ -3,24 +3,7 @@ import re
 import bcrypt
 from RegistrationSystemClass import RegistrationSystem
 from NewStudentsClass import Student
-from datetime import datetime
-
-class Log: 
-    def __init__(self,id,role,date_time = datetime.now(),db_name="RegistrationSystem.db"):
-        self.id = id 
-        self.role = role
-        self.date_time = date_time
-
-        self.db_name = db_name
-        self.connect = sqlite3.connect(self.db_name)
-        self.cursor = self.connect.cursor()
-        
-        ## insert log to database
-        self.cursor.execute('''INSERT INTO Log (id, role, date_time)
-                                VALUES (?, ?, ?)''',
-                                (self.id,self.role,self.date_time))
-        self.connect.commit()
-        self.connect.close()
+from FacultyClass import Faculty
 
 
 class Admin:
@@ -36,13 +19,6 @@ class LoginSystem:
         self.db_name = db_name
         self.connect = sqlite3.connect(self.db_name)
         self.cursor = self.connect.cursor()
-
-        self.cursor.execute('''CREATE TABLE IF NOT EXISTS Log (
-                                    id TEXT NOT NULL,
-                                    role TEXT NOT NULL,
-                                    date_time TEXT NOT NULL)
-                                ''') #create Log table if it doesn't exist
-
 
     ## checking if password is strong function
     try: 
@@ -64,19 +40,17 @@ class LoginSystem:
             print("unexpected password entered")
 
 
-
     ######## login validation function 
-    def login(self, user_id_or_email, password):
+    def login(self, user_id, password):
         try:
             self.connect = sqlite3.connect(self.db_name)
             self.cursor = self.connect.cursor()
 
-                ## checking if entered id or email is student 
+                ## checking if entered id is student 
             self.cursor.execute(
-                "SELECT student_id, name, email, password, program, current_level FROM Students WHERE student_id=? OR email=?", ### added or email here 
-                (user_id_or_email,user_id_or_email)
+                "SELECT student_id, name, email, password, program, current_level FROM Students WHERE student_id=?",
+                (user_id,)
             )
-         
                 ## fetch from student database table if id is student and store in (row) variable
             row = self.cursor.fetchone()
 
@@ -94,23 +68,19 @@ class LoginSystem:
                         level=row[5],
                     )
                     self.connect.close()
-
-                    ## register log into the log database
-                    log = Log(fetched_student.student_id,"student")
-
                     ## return found object
                     # return ("student", fetched_student)
-                    return ["student", fetched_student, log]
+                    return ["student", fetched_student]
 
                 ## if password isn't correct return message
                 self.connect.close()
-                return ["Invalid ID or password.",None,None]
+                return "Invalid ID or password."
 
 
                 ## checking if entered id is admin
             self.cursor.execute(
-                "SELECT admin_id, name, email, password FROM Admin WHERE admin_id=? OR email=?",
-                (user_id_or_email,user_id_or_email)
+                "SELECT admin_id, name, email, password FROM Admin WHERE admin_id=?",
+                (user_id,)
             )
                 ## fetch from admin database table if id is admin and store in (row) variable
             row = self.cursor.fetchone()
@@ -126,37 +96,75 @@ class LoginSystem:
                         email=row[2],
                         password=row[3]
                     )
-                    log = Log(fetched_admin.admin_id,"admin")
                     self.connect.close()
                     # return ("admin", fetched_admin)
-                    return ["admin",fetched_admin, log]
+                    return ["admin",fetched_admin]
 
                 self.connect.close()
                 ## if password is not correct return
                 # return "Invalid ID or password."
-                return ["invalid",None,None]
-            
-            ## if id is not student or admin return message
+                return ["invalid",None]
+                #############################################
+                ## checking if entered id is faculty member
+                #############################################
+            self.cursor.execute(
+                "SELECT faculty_id, name, email, password FROM Faculty WHERE faculty_id=?",
+                (user_id,)
+            )
+                ## fetch from faculty database table if id is faculty and store in (row) variable
+            row = self.cursor.fetchone()
+
+            if row:
+                hashed_password = row[3]
+
+                if bcrypt.checkpw(password.encode(), hashed_password):  ## check if entered password is correct and similar to password in database table
+                        ## create and return faculty object
+                    fetched_faculty = Faculty(
+                        faculty_id=row[0],
+                        name=row[1],
+                        email=row[2],
+                        password=row[3]
+                    )
+                    self.connect.close()
+                    # return ("faculty", fetched_faculty)
+                    return ["faculty",fetched_faculty]
+
+                self.connect.close()
+                ## if password is not correct return
+                # return "Invalid ID or password."
+                return ["invalid",None]
+
+            ## if id is not student or admin or faculty return message
             self.connect.close()
-            return ["Invalid ID or password.",None,None]
+            return ["Invalid ID or password.",None]
         
         except Exception as exception:
-            return [f"login has failed: {exception}",None,None]
+            return f"login has failed: {exception}"
         
         finally: 
             self.connect.close()
 
 
 
+            
+
+
+
 ### testing code 
 RegistrationSystem()
-
+reg = RegistrationSystem()
 student1 = Student(2444333,"abdulrahman","abdulrahman@gmail.com","@Aa123456","Power", 2)
 admin1 = Admin(2444123,"mohammed","mohammed@gmail.com","@Mm123456")
+faculty1 = Faculty(22230,"Dr.ahmad","ahmad@gmail.com","@Am112233")
 
 system = LoginSystem()
 
-print(system.signup(student1))
-print(system.signup(admin1))
+reg.add_student(student1)
+reg.add_admin(admin1)
+reg.add_faculty(faculty1)
 
-x,y,z = system.login(student1.email,student1.password)
+print(system.login(student1.student_id, student1.password))
+print(system.login(admin1.admin_id, admin1.password))
+print(system.login(faculty1.faculty_id, faculty1.password))
+
+system = LoginSystem()
