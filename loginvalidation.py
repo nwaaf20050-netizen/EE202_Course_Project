@@ -3,6 +3,7 @@ import re
 import bcrypt
 from RegistrationSystemClass import RegistrationSystem
 from NewStudentsClass import Student
+from FacultyClass import Faculty
 
 
 class Admin:
@@ -174,8 +175,37 @@ class LoginSystem:
                 ## if password is not correct return
                 # return "Invalid ID or password."
                 return ["invalid",None]
-            
-            ## if id is not student or admin return message
+                #############################################
+                ## checking if entered id is faculty member
+                #############################################
+            self.cursor.execute(
+                "SELECT faculty_id, name, email, password,course_preferences,availability,assigned_courses FROM Faculty WHERE faculty_id=?",
+                (user_id,)
+            )
+                ## fetch from faculty database table if id is faculty and store in (row) variable
+            row = self.cursor.fetchone()
+
+            if row:
+                hashed_password = row[3]
+
+                if bcrypt.checkpw(password.encode(), hashed_password):  ## check if entered password is correct and similar to password in database table
+                        ## create and return faculty object
+                    fetched_faculty = Faculty(
+                        faculty_id=row[0],
+                        name=row[1],
+                        email=row[2],
+                        password=row[3]
+                    )
+                    self.connect.close()
+                    # return ("faculty", fetched_faculty)
+                    return ["faculty",fetched_faculty]
+
+                self.connect.close()
+                ## if password is not correct return
+                # return "Invalid ID or password."
+                return ["invalid",None]
+
+            ## if id is not student or admin or faculty return message
             self.connect.close()
             return ["Invalid ID or password.",None]
         
@@ -185,19 +215,25 @@ class LoginSystem:
         finally: 
             self.connect.close()
 
+            
+
 
 
 ### testing code 
-RegistrationSystem()
-
+# RegistrationSystem()
+# reg = RegistrationSystem()
 # student1 = Student(2444333,"abdulrahman","abdulrahman@gmail.com","@Aa123456","Power", 2)
 # admin1 = Admin(2444123,"mohammed","mohammed@gmail.com","@Mm123456")
+# faculty1 = Faculty(22230,"Dr.ahmad","ahmad@gmail.com","@Am112233")
 
 # system = LoginSystem()
 
-# print(system.signup(student1))
-# print(system.signup(admin1))
+# reg.add_student(student1)
+# reg.add_admin(admin1)
+# reg.add_faculty(faculty1)
 
 # print(system.login(student1.student_id, student1.password))
 # print(system.login(admin1.admin_id, admin1.password))
+# print(system.login(faculty1.faculty_id, faculty1.password))
+
 system = LoginSystem()

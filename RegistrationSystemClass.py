@@ -134,10 +134,10 @@ class RegistrationSystem:
 
             ## insert faculty object to database
             self.cursor.execute('''
-                INSERT INTO Faculty (faculty_id,name,email,password)
-                VALUES (?, ?, ?, ?)
+                INSERT INTO Faculty (faculty_id,name,email,password,course_preferences,availability)
+                VALUES (?, ?, ?, ?, ?, ?)
             ''',
-            (faculty.faculty_id,faculty.name,faculty.email,password_hash))
+            (faculty.faculty_id,faculty.name,faculty.email,password_hash,faculty.course_prefernces,faculty.availability))
 
             self.connect.commit()
             print(f"Faculty {faculty.name} with code {faculty.faculty_id} added to database.")
@@ -154,8 +154,11 @@ class RegistrationSystem:
 
     def set_course_preferences(self, faculty_id, course_list):
 
-        pref_str = ",".join(course_list)  ## create a string from courses list
-
+        if isinstance(course_list, list):
+            pref_str = ",".join(course_list)  ## create a string from courses list
+        
+        else:
+            pref_str = course_list  ## if already string
         try:
             self.connect = sqlite3.connect(self.db_name)
             self.cursor = self.connect.cursor()
@@ -201,7 +204,7 @@ class RegistrationSystem:
         finally:
             self.connect.close()        
 
-    def assign_course_to_faculty(self, faculty_id, course_code):
+    def assign_course_to_faculty(self, faculty_id, course_code, section):
         ##Checks: faculty availability and course schedule and noo schedule conflicts with other assigned courses
 
 
@@ -231,6 +234,14 @@ class RegistrationSystem:
                 SET assigned_courses = ?
                 WHERE faculty_id = ?
             """, (assigned_str, faculty_id))
+            # update course schedule table to set instructor name for the assigned course section
+            self.cursor.execute("""SELECT name FROM Faculty WHERE faculty_id=?""",(faculty_id,))
+            instructor_name = self.cursor.fetchone()
+            self.cursor.execute("""
+                UPDATE CourseSchedule
+                SET instructor_name = ?
+                WHERE course_code = ? AND section = ?
+            """, (instructor_name, course_code, section))
 
             self.connect.commit()
             print(f"Course {course_code} assigned to faculty {faculty_id}.")
@@ -344,6 +355,91 @@ class RegistrationSystem:
 
         finally:
             self.connect.close()
+    def get_preferences(self, faculty_id):
+        try:
+            self.connect = sqlite3.connect(self.db_name)
+            self.cursor = self.connect.cursor()
+
+            self.cursor.execute("SELECT course_preferences FROM Faculty WHERE faculty_id=?", (faculty_id,))
+            preferences=self.cursor.fetchall()
+            return preferences
+        except sqlite3.Error as e:
+            print("Error:", e)
+            return []
+
+        finally:
+            self.connect.close()
+    def show_all_prefreferences(self):
+        try:
+            self.connect=sqlite3.connect(self.db_name)
+            self.cursor=self.connect.cursor()
+
+            self.cursor.execute("SELECT faculty_id,name,availability,assigned_courses,course_preferences FROM Faculty")
+            all_prefreferences=self.cursor.fetchall()
+            return all_prefreferences
+        except sqlite3.Error as e:
+            print("Error:",e)
+            return []
+
+        finally:    
+            self.connect.close()
+
+    def show_all_assigned(self):
+        try:
+            self.connect=sqlite3.connect(self.db_name)
+            self.cursor=self.connect.cursor()
+
+            self.cursor.execute("SELECT assigned_courses FROM Faculty")
+            all_assigned=self.cursor.fetchall()
+            return all_assigned
+        except sqlite3.Error as e:
+            print("Error:",e)
+            return []
+
+        finally:    
+            self.connect.close()
+        
+    def get_None_course_section_schedule(self): # to get all course sections with no assigned faculty
+        try:
+            self.connect=sqlite3.connect(self.db_name)
+            self.cursor=self.connect.cursor()
+
+            self.cursor.execute("SELECT course_code,section FROM CourseSchedule WHERE instructor_name IS NULL") 
+            none_course_schedule=self.cursor.fetchall()
+            return none_course_schedule
+        except sqlite3.Error as e:
+            print("Error:",e)
+            return []
+
+        finally:    
+            self.connect.close()
+
+    def All_courses_schedule(self): # to get all course sections schedule
+        try:
+            self.connect=sqlite3.connect(self.db_name)
+            self.cursor=self.connect.cursor()
+
+            self.cursor.execute("""SELECT course_code,section, days, start_time, end_time,
+                           instructor_name, place, room FROM CourseSchedule""") 
+            all_courses_schedule=self.cursor.fetchall()
+            list_course=[]
+            for i in all_courses_schedule:
+                self.cursor.execute("""SELECT course_name,credit_hours FROM Courses WHERE course_code=?""",(i[0],))
+                course_data=self.cursor.fetchone()
+                self.cursor.execute("""SELECT maximum_capacity FROM Courses WHERE course_code=?""",(i[0],))
+                max_capacity=self.cursor.fetchone()
+                self.cursor.execute("""SELECT COUNT(*) FROM Enrollments WHERE course_code=?""",(i[0],))
+                enrollment_count=self.cursor.fetchone()
+                list_course.append((i)+(course_data)+(max_capacity)+(enrollment_count))
+
+            return list_course
+        except sqlite3.Error as e:
+            print("Error:",e)
+            return []
+
+        finally:    
+            self.connect.close()
+
 
     def add_course(self, course):
         """
@@ -1272,6 +1368,44 @@ class RegistrationSystem:
             print(f"Error deleting student: {e}")
         finally:
             conn.close()
+    def get_course_data(self, course_code):
+        """
+        Return course data for a given course_code.
+        """
+        try:
+            self.connect = sqlite3.connect(self.db_name)
+            self.cursor = self.connect.cursor()
+
+            self.cursor.execute("""
+                SELECT course_code, course_name, credit_hours,
+                FROM Courses
+                WHERE course_code = ?
+            """, (course_code,))
+
+            data = self.cursor.fetchone()
+            self.cursor.execute("""
+                SELECT section, days, start_time, end_time,"instructor_name",
+                            "place",
+                            "room",
+                            "enrolled_count",
+                            "max_capacity"
+            """, (course_code,))
+
+            data = self.cursor.fetchone()
+            self.cursor.execute("""
+                SELECT section, days, start_time, end_time,"instructor_name",
+                            "place",
+                            "room",
+                            "enrolled_count",
+                            "max_capacity"
+            """, (course_code,))
+
+            data1 = self.cursor.fetchone()
+            data = data + data1
+            return data
+
+        finally:
+            self.connect.close()
             
 
 

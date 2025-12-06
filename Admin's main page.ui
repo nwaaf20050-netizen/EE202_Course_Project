@@ -116,9 +116,9 @@
    <widget class="QPushButton" name="pushButton_Logout">
     <property name="geometry">
      <rect>
-      <x>540</x>
+      <x>510</x>
       <y>440</y>
-      <width>221</width>
+      <width>251</width>
       <height>71</height>
      </rect>
     </property>
@@ -152,6 +152,42 @@
     </property>
     <property name="text">
      <string>Show Enrollment Data</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_Preferences">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>360</y>
+      <width>251</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Show Faculty Preferences</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_Assign">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>360</y>
+      <width>261</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Assign Course To Faculty</string>
     </property>
    </widget>
   </widget>

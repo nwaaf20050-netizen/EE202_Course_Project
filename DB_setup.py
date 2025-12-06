@@ -193,8 +193,8 @@ def seed_faculty():
     faculty = RegistrationSystem()
 
     faculty_data = [
-        Faculty(10001,"Dr.Omar","Omar_O@example.com","@Oo112233"),
-        Faculty(10002,"Dr.Mohammed","Mohammed_M@example.com","@Mm112233"),
+        Faculty(10001,"Dr.Omar","Omar_O@example.com","@Oo112233","MATH101"),
+        Faculty(10002,"Dr.Mohammed","Mohammed_M@example.com","@Mm112233","ENG101"),
         Faculty(10003,"Dr.Khalid","Khalid_K@example.com","@Kk112233"),
         Faculty(10004,"Dr.Ahmad","Ahmad_A@example.com","@Aa112233")
 
@@ -367,6 +367,7 @@ def seed_admin():
 
 def seed_enrollments():
     system = RegistrationSystem()
+    #ID and courses and section 
     enrollments = [
         ("2210002", [("ENG101", "A"), ("MATH101", "B")]),
         ("2210003", [("CIR101", "B")]),
@@ -385,9 +386,10 @@ def seed_enrollments():
 
 
 system=RegistrationSystem()
-# seed_students() 
-# seed_faculty()
-# seed_admin()
-# seed_courses()
-# seed_schedule()
+system.drop_all_tables()
+seed_students() 
+seed_faculty()
+seed_admin()
+seed_courses()
+seed_schedule()
 seed_enrollments()
