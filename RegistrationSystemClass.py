@@ -475,13 +475,12 @@ class RegistrationSystem:
 
     def get_available_courses(self, student_id):
         """
-        Return all courses that are available for a specific student.
+        Return all available course sections for a specific student.
 
-        A course is available if:
-        - It matches the student's program (plan)
+        A course section is returned if:
+        - The course matches the student's program (plan)
         - All prerequisites are completed with passing grades
         - The course is not already passed
-        - Sections are returned with schedule and capacity info
 
         Structure returned:
         [
@@ -489,23 +488,19 @@ class RegistrationSystem:
                 course_code,
                 course_name,
                 credit_hours,
-                [
-                    (
-                        section,
-                        days,
-                        start_time,
-                        end_time,
-                        instructor_name,
-                        place,
-                        room,
-                        enrolled_count,
-                        capacity
-                    ),
-                    ...
-                ]
+                section,
+                days,
+                start_time,
+                end_time,
+                instructor_name,
+                place,
+                room,
+                enrolled_count,
+                capacity
             ),
             ...
         ]
+
         """
 
         try:
@@ -580,6 +575,7 @@ class RegistrationSystem:
                 if course_code in passed:
                     continue
 
+
                 # --- Build prerequisite list ---
                 prereq_list = [
                     p.strip() for p in prereq_str.split(",") if p.strip()
@@ -626,6 +622,15 @@ class RegistrationSystem:
                     place,
                     room
                 ) in sections_info:
+                    
+                    # Skip sections the student is already enrolled in
+                    self.cursor.execute(
+                        "SELECT 1 FROM Enrollments WHERE student_id=? AND course_code=? AND section=?",
+                        (student_id, course_code, section)
+                    )
+                    if self.cursor.fetchone():
+                        continue
+
 
                     # Count how many students are enrolled in this section
                     self.cursor.execute(
@@ -638,9 +643,6 @@ class RegistrationSystem:
                     )
                     enrolled_count = self.cursor.fetchone()[0]
 
-                    # Optional: skip full sections
-                    if enrolled_count >= int(max_capacity):
-                        continue
 
                     # Append full section info
                     section_data.append(
@@ -661,10 +663,37 @@ class RegistrationSystem:
                 if not section_data:
                     continue
 
-                # Add course + its available sections
-                available_courses.append(
-                    (course_code, course_name, credit_hours, section_data)
-                )
+                # Add each available section as a separate entry in the result list
+                for sec in section_data:
+                    (
+                        section,
+                        days,
+                        start_time,
+                        end_time,
+                        instructor_name,
+                        place,
+                        room,
+                        enrolled_count,
+                        max_capacity
+                    ) = sec
+
+                    available_courses.append(
+                        (
+                            course_code,
+                            course_name,
+                            credit_hours,
+                            section,
+                            days,
+                            start_time,
+                            end_time,
+                            instructor_name,
+                            place,
+                            room,
+                            enrolled_count,
+                            max_capacity
+                        )
+                    )
+
 
             return available_courses
 
@@ -1095,19 +1124,118 @@ class RegistrationSystem:
         )
         return cur.fetchone()
     def get_student_schedule(self, student_id):
+        """
+        Return the student's current registered sections
+        in the same structure as get_available_courses():
+
+        [
+            (
+                course_code,
+                course_name,
+                credit_hours,
+                section,
+                days,
+                start_time,
+                end_time,
+                instructor_name,
+                place,
+                room,
+                enrolled_count,
+                capacity
+            ),
+            ...
+        ]
+        """
+
         try:
-            conn=sqlite3.connect(self.db_name)
-            cur=conn.cursor()
-            cur.execute("SELECT course_code, section FROM Enrollments WHERE student_id=?",(student_id,))
-            courses_sections=cur.fetchall()
-            list_of_courses=[]
-            for courses,sections in courses_sections :
-                cur.execute("SELECT * FROM CourseSchedule WHERE course_code=? AND section=?",(courses,sections))
-                list_of_courses.append(cur.fetchone())
-                
-            return list_of_courses
+            conn = sqlite3.connect(self.db_name)
+            cur = conn.cursor()
+
+            # 1) Fetch all course_code + section the student is enrolled in
+            cur.execute(
+                "SELECT course_code, section FROM Enrollments WHERE student_id=?",
+                (student_id,)
+            )
+            courses_sections = cur.fetchall()
+
+            schedule_data = []
+
+            for course_code, section in courses_sections:
+
+                # 2) Fetch section schedule info + course capacity
+                cur.execute("""
+                    SELECT days, start_time, end_time,
+                        instructor_name, place, room, maximum_capacity
+                    FROM CourseSchedule
+                    JOIN Courses USING(course_code)
+                    WHERE course_code=? AND section=?
+                """, (course_code, section))
+
+                row = cur.fetchone()
+                if not row:
+                    continue
+
+                (days, start_time, end_time,
+                instructor_name, place, room, max_capacity) = row
+
+                # 3) Fetch course name and credit hours
+                cur.execute("""
+                    SELECT course_name, credit_hours
+                    FROM Courses
+                    WHERE course_code=?
+                """, (course_code,))
+                cdata = cur.fetchone()
+
+                if not cdata:
+                    continue
+
+                course_name, credit_hours = cdata
+
+                # 4) Count number of enrolled students in this section
+                cur.execute(
+                    "SELECT COUNT(*) FROM Enrollments WHERE course_code=? AND section=?",
+                    (course_code, section)
+                )
+                enrolled_count = cur.fetchone()[0]
+
+                # 5) Append final entry in the same format as get_available_courses
+                schedule_data.append(
+                    (
+                        course_code,
+                        course_name,
+                        credit_hours,
+                        section,
+                        days,
+                        start_time,
+                        end_time,
+                        instructor_name,
+                        place,
+                        room,
+                        enrolled_count,
+                        max_capacity
+                    )
+                )
+
+            return schedule_data
+
         except sqlite3.Error as e:
-            print(f"An error occurred while viewing Enrollments and CourseSchedule: {e}")
+            print(f"Error loading student schedule: {e}")
+            return []
+        finally:
+            conn.close()
+    def delete_register_student(self, student_id, course_code, section):
+        conn=sqlite3.connect(self.db_name)
+        cur=conn.cursor()
+        try:
+            cur.execute("""
+                DELETE FROM Enrollments
+                WHERE student_id=? AND course_code=? AND section=?
+            """,(student_id, course_code, section))
+            conn.commit()
+        except sqlite3.Error as e:
+            print(f"Error deleting student: {e}")
+        finally:
+            conn.close()
             
 
 
