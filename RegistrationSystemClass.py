@@ -6,6 +6,162 @@ from TimeBuilder import Schedule, ScheduleSystem
 import bcrypt
 
 
+# CourseClass.py
+# Represents a course model with attributes and methods to manage course data.
+import sqlite3
+class Course:
+
+    def __init__(self,course_code,name,credits,lecture_hours,lab_hours,prerequisites,max_capacity,program,level):
+        # Attributes defined in project requirements
+        self.course_code = course_code
+        self.name = name
+        self.credits = credits
+        self.lecture_hours = lecture_hours
+        self.lab_hours = lab_hours
+        self.prerequisites = prerequisites  # list of course codes
+        self.max_capacity = max_capacity
+        self.program = program  # list of programs
+        self.level = level
+
+        # System-managed attribute
+        self.enrolled_students = 0  
+
+    def is_full(self):
+        """Checks if the course reached maximum capacity"""
+        try:
+            connect= sqlite3.connect("RegistrationSystem.db")
+            cursor= connect.cursor()
+
+            cursor.execute('''SELECT COUNT(*) FROM Enrollments WHERE course_code=?''', (self.course_code,))
+
+            self.enrolled_students=cursor.fetchone()[0]
+
+            connect.close()
+
+            return self.enrolled_students >= self.max_capacity
+        
+        except sqlite3.Error as e:
+            print(f"error checking course capacity: {e}")
+            return False
+
+            
+
+    def check_prerequisites(self, student_transcript):
+        """
+        Checks if the student has completed all prerequisite courses with a passing grade.
+        
+        student_transcript format:
+            [
+                ("EE201", "B"),
+                ("MATH101", "A"),
+                ("PHY101", "F")
+            ]
+        """
+        try:
+            # Extract only passed courses (grade != 'F')
+            passed_courses = [
+                course_code for (course_code, grade) in student_transcript if grade.upper() != 'F'
+            ]
+            # Check if ALL prerequisites are in the passed courses list
+            return all(req in passed_courses 
+                       for req in self.prerequisites)
+        
+        except (ValueError,TypeError) as e:
+            print(f"error checking prerequisites: {e}")
+            return False
+        
+
+# StudentClass.py
+import sqlite3
+
+class Student():  
+
+    def __init__(self, student_id, name, email,password, program, level, transcript=None):
+        self.student_id = student_id
+        self.name = name
+        self.email = email
+        self.password=password
+        self.program = program  # Must be from the defined list
+        self.level = level
+
+        # Transcript is a list of tuples: (course_code, grade)
+        self.transcript = transcript if transcript else []
+
+    def get_completed_credits(self):
+       # Calculate total completed credits based on transcript
+        try:
+            connect = sqlite3.connect("RegistrationSystem.db")
+            cursor = connect.cursor()
+
+            cursor.execute("""
+                SELECT course_code, grade
+                FROM transcripts
+                WHERE student_id = ?
+            """, (self.student_id,)) # Fetch transcript entries for the student
+
+            rows = cursor.fetchall()
+
+            total_credits = 0
+
+            for course_code, grade in rows: # Iterate through transcript entries
+                if grade.upper() == 'F':
+                    continue
+
+                cursor.execute("""
+                    SELECT credit_hours
+                    FROM Courses
+                    WHERE course_code = ?
+                """, (course_code,)) # Fetch credit hours for the course
+
+                result = cursor.fetchone()
+
+                if result is not None: # If course found, add its credits
+                    credit_hours = result[0] 
+                    total_credits += credit_hours  # Add credits to total
+            connect.close()
+            return total_credits
+        except sqlite3.Error as e:
+                print("Database error:", e)
+                return None
+        
+    
+
+    def add_to_transcript(self, course_code,grade):
+
+      # Add a course and grade to the transcript if not already present
+      try:
+        existing_course_codes = [course_codes_in_transcript 
+                                 for (course_codes_in_transcript, grades_in_transcript) in self.transcript]
+        
+        if course_code not in existing_course_codes and grade.upper() in ['A', 'B', 'C', 'D', 'F', 'A+', 'B+', 'C+', 'D+'] :
+        
+            self.transcript.append((course_code,grade))
+        else:
+            print(f"Invalid entry or course {course_code} already in transcript.")
+
+
+        conn = sqlite3.connect("RegistrationSystem.db")
+        cursor = conn.cursor()
+        cursor.execute(""" SELECT student_id FROM Students WHERE student_id = ? """, (self.student_id,)) # see if the student is in the data base
+
+        student_id = cursor.fetchone()
+        if student_id: # if the student in the database add to transcript
+            cursor.execute("""
+                INSERT INTO transcripts (student_id, course_code, grade)
+                VALUES (?, ?, ?)
+            """, (self.student_id, course_code, grade))
+            conn.commit()
+
+      except Exception as e:
+            print("Error adding to transcript:", e)  
+      except sqlite3.Error as e:
+            print("Database error:", e) 
+      finally:
+            conn.close()
+
+    
+
+
 
 
 
@@ -216,6 +372,11 @@ class RegistrationSystem:
         if not self.detect_faculty_conflicts(faculty_id, new_assignment):
             print("conflict detected failed to add course")
             return False
+        
+    ## check faculty availability
+        if not self.is_course_in_preferences(faculty_id, course_code):
+            print(f"Course {course_code} is outside faculty {faculty_id} preferences/availability")
+            return False
 
         ## save assignment as commas string 
         assigned_str = ",".join(new_assignment)
@@ -294,7 +455,7 @@ class RegistrationSystem:
                     all_schedule_ids.append(r[0])
 
             # Use TimeBuilder conflict checker
-            status = schedule_sys.has_conflict("any_id", all_schedule_ids)   ## using has conflict in time builder class 
+            status = schedule_sys.has_conflict("id", all_schedule_ids)   ## using has conflict in time builder class 
 
             # has conflict method requires student id as parameter but we send a mock id to use function
 
@@ -302,6 +463,46 @@ class RegistrationSystem:
 
         except sqlite3.Error as e:
             print("Conflict check error:", e)
+            return False
+
+        finally:
+            self.connect.close()
+
+
+###################################### new method added by abdulrahman #########################
+    def is_course_in_preferences(self, faculty_id, course_code):
+        
+        ##Checks if the course schedule fits within faculty availability/preferences.
+        try:
+            self.connect = sqlite3.connect(self.db_name)
+            self.cursor = self.connect.cursor()
+
+            # Get faculty availability
+            self.cursor.execute("SELECT availability FROM Faculty WHERE faculty_id=?", (faculty_id,))
+            row = self.cursor.fetchone()
+            if not row or not row[0]:
+                return True  # No availability set → allow assignment
+
+            availability = row[0].split(",")  # Assuming stored as "Sun 11:00-13:00, Tue 11:00-13:00"
+            
+            # Get course schedule(s)
+            self.cursor.execute("""
+                SELECT start_time, end_time, days 
+                FROM CourseSchedule 
+                WHERE course_code=?
+            """, (course_code,))
+            schedules = self.cursor.fetchall()
+
+            for start_time, end_time, days in schedules:
+                course_times = [d.strip() + " " + start_time + "-" + end_time for d in days.split(",")]
+                # If none of the course times fit in availability, reject
+                if not any(ct in availability for ct in course_times):
+                    return False
+
+            return True
+
+        except sqlite3.Error as e:
+            print("Error checking preferences:", e)
             return False
 
         finally:
