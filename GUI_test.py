@@ -330,11 +330,59 @@ class CourseRegistration(QMainWindow):
        self.section=self.lineEdit_section.text()
        list_of_courses=[(self.code,self.section)]
        self.registraion.register_student(instance_ID_number,list_of_courses)
+       self.load_get_available_courses()
+       self.load_get_student_schedule()
     def delete(self):
         self.code2=self.lineEdit_code2.text()
         self.section2=self.lineEdit_section2.text()
         self.registraion.delete_register_student(instance_ID_number,self.code2,self.section2)
+        self.load_get_available_courses()
+        self.load_get_student_schedule()
+    def load_get_available_courses(self):
+
+        results=self.registraion.get_available_courses(instance_ID_number)
+        model = QStandardItemModel()
+        model.setHorizontalHeaderLabels(["course_code",
+                            "course_name",
+                            "credit_hours",
+                            "section",
+                            "days",
+                            "start_time",
+                            "end_time",
+                            "instructor_name",
+                            "place",
+                            "room",
+                            "enrolled_count",
+                            "max_capacity" ])
+        for row in results:
+            
+            items = [QStandardItem(str(x)) for x in row]
+            model.appendRow(items)
+    
+
+        self.tableView.setModel(model)
+    def load_get_student_schedule(self):
+        results1=self.registraion.get_student_schedule(instance_ID_number)
+        model1 = QStandardItemModel()
         
+        model1.setHorizontalHeaderLabels(["course_code",
+                            "course_name",
+                            "credit_hours",
+                            "section",
+                            "days",
+                            "start_time",
+                            "end_time",
+                            "instructor_name",
+                            "place",
+                            "room",
+                            "enrolled_count",
+                            "max_capacity"])
+        for row1 in results1:
+            
+            items1 = [QStandardItem(str(x1)) for x1 in row1]
+            model1.appendRow(items1)
+
+        self.tableView_2.setModel(model1)
 
 
 

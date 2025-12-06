@@ -573,7 +573,7 @@ class RegistrationSystem:
 
                 # --- Skip if course already passed ---
                 if course_code in passed:
-                    continue
+                    continue 
 
 
                 # --- Build prerequisite list ---
