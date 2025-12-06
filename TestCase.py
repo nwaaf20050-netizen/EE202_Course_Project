@@ -1,261 +1,233 @@
-from RegistrationSystemClass import RegistrationSystem
-from NewCourseClass import Course
-
-
-def seed_courses():
-    system = RegistrationSystem()
-
-    courses = [
-
-        # ===== Level 1 – Shared foundation courses (no prerequisites) =====
-        Course(
-            "ENG101",
-            "Introduction to Electrical and Computer Engineering",
-            3, 3, 0,
-            [], 40,
-            ["Computer", "Power", "Biomedical", "Communication"],
-            1
-        ),
-        Course(
-            "MATH101",
-            "Calculus I for Engineers",
-            3, 3, 0,
-            [], 40,
-            ["Computer", "Power", "Biomedical", "Communication"],
-            1
-        ),
-        Course(
-            "PHYS101",
-            "Physics I for Engineers",
-            3, 3, 0,
-            [], 40,
-            ["Computer", "Power", "Biomedical", "Communication"],
-            1
-        ),
-        Course(
-            "CIR101",
-            "Electric Circuits I",
-            3, 3, 1,
-            [], 40,
-            ["Computer", "Power", "Biomedical", "Communication"],
-            1
-        ),
-
-        # ===== Computer Engineering – program specific =====
-        Course(
-            "CPE201",
-            "Digital Logic Design",
-            3, 3, 1,
-            ["CIR101"], 40,
-            ["Computer"],
-            2
-        ),
-        Course(
-            "CPE301",
-            "Microprocessors and Interfacing",
-            3, 3, 1,
-            ["CPE201"], 40,
-            ["Computer"],
-            3
-        ),
-        Course(
-            "CPE401",
-            "Embedded Systems Design Project",
-            3, 2, 3,
-            ["CPE301"], 40,
-            ["Computer"],
-            4
-        ),
-
-        # ===== Power Engineering – program specific =====
-        Course(
-            "PWE201",
-            "Introduction to Power Systems",
-            3, 3, 0,
-            ["CIR101"], 40,
-            ["Power"],
-            2
-        ),
-        Course(
-            "PWE301",
-            "Electrical Machines and Drives",
-            3, 3, 1,
-            ["PWE201"], 40,
-            ["Power"],
-            3
-        ),
-        Course(
-            "PWE401",
-            "Power System Protection",
-            3, 3, 0,
-            ["PWE301"], 40,
-            ["Power"],
-            4
-        ),
-
-        # ===== Biomedical Engineering – program specific =====
-        Course(
-            "BME201",
-            "Biomedical Signals and Systems",
-            3, 3, 0,
-            ["CIR101"], 40,
-            ["Biomedical"],
-            2
-        ),
-        Course(
-            "BME301",
-            "Medical Instrumentation",
-            3, 3, 1,
-            ["BME201"], 40,
-            ["Biomedical"],
-            3
-        ),
-        Course(
-            "BME401",
-            "Biomedical Imaging Systems",
-            3, 3, 0,
-            ["BME301"], 40,
-            ["Biomedical"],
-            4
-        ),
-
-        # ===== Communication Engineering – program specific =====
-        Course(
-            "COM201",
-            "Signals and Systems",
-            3, 3, 0,
-            ["CIR101"], 40,
-            ["Communication"],
-            2
-        ),
-        Course(
-            "COM301",
-            "Digital Communication",
-            3, 3, 0,
-            ["COM201"], 40,
-            ["Communication"],
-            3
-        ),
-        Course(
-            "COM401",
-            "Wireless Communication Systems",
-            3, 3, 0,
-            ["COM301"], 40,
-            ["Communication"],
-            4
-        ),
-    ]
-
-    for course in courses:
-        # This will use your RegistrationSystem.add_course logic
-        system.add_course(course)
-
-
-
-seed_courses()
-print("Seeding finished: 16 courses inserted (with shared and program-specific courses).")
-
-
-
+import os
 import sqlite3
-import random
 
 from RegistrationSystemClass import RegistrationSystem
+from TimeBuilder import ScheduleSystem, Schedule
+from NewCourseClass import Course
 from NewStudentsClass import Student
-import random
-import NewUserClass
-
-
-# All possible passing grades
-GRADES = ["D", "D+", "C", "C+", "B", "B+", "A", "A+"]
-
-
-def get_completed_courses(program, level):
-    """
-    Returns completed courses for the student according to:
-    - shared level 1 courses
-    - program-specific courses for levels 2–4
-    """
-
-    # Level 1 shared foundation courses
-    level1 = ["ENG101", "MATH101", "PHYS101", "CIR101"]
-
-    # Program-specific courses
-    programs = {
-        "Computer": ["CPE201", "CPE301", "CPE401"],
-        "Power": ["PWE201", "PWE301", "PWE401"],
-        "Biomedical": ["BME201", "BME301", "BME401"],
-        "Communication": ["COM201", "COM301", "COM401"],
-    }
-
-    prog_courses = programs.get(program, [])
-
-    if level == 1:
-        return []  # no history
-    elif level == 2:
-        return level1
-    elif level == 3:
-        return level1 + prog_courses[:1]  # only level 2 course
-    elif level == 4:
-        return level1 + prog_courses[:2]  # level 2 + level 3
-    else:
-        return []
-
-
-def seed_students():
-    system = RegistrationSystem()
-
-    # 4 students for each program (levels 1–4)
-    students_data = [
-        # Computer
-        ("2210001", "Nawaf Alshamrani", "nawaf@example.com",'nawaf', "Computer", 1),
-        ("2210002", "Fahad Alqahtani", "fahad@example.com","fahad", "Computer", 2),
-        ("2210003", "Saud Alharbi", "saud@example.com","saud", "Computer", 3),
-        ("2210004", "Turki Almutairi", "turki@example.com","turki", "Computer", 4),
-
-        # Power
-        ("2211001", "Abdullah Alsubaie", "abdullah@example.com","abdullah", "Power", 1),
-        ("2211002", "Mohammed Alosaimi", "mohammed@example.com","mohammed", "Power", 2),
-        ("2211003", "Sultan Alshammari", "sultan@example.com","sultan", "Power", 3),
-        ("2211004", "Rakan Alenazi", "rakan@example.com","rakan", "Power", 4),
-
-        # Biomedical
-        ("2212001", "Yousef Alotaibi", "yousef@example.com","yousef", "Biomedical", 1),
-        ("2212002", "Faisal Alghamdi", "faisal@example.com","faisal", "Biomedical", 2),
-        ("2212003", "Bader Alsharif", "bader@example.com","bader", "Biomedical", 3),
-        ("2212004", "Talal Alzahrani", "talal@example.com","talal", "Biomedical", 4),
-
-        # Communication
-        ("2213001", "Omar Aljohani", "omar@example.com","omar", "Communication", 1),
-        ("2213002", "Mansour Alsaadi", "mansour@example.com","mansour", "Communication", 2),
-        ("2213003", "Khalid Alshatti", "khalid@example.com","khalid", "Communication", 3),
-        ("2213004", "Saad Alomari", "saad@example.com","saad", "Communication", 4),
-    ]
-
-    for sid, name, email,password, program, level in students_data:
-        # Generate transcript as list of tuples (course_code, grade)
-        completed = get_completed_courses(program, level)
-        transcript_list = [(c, random.choice(GRADES)) for c in completed]
-
-        # create student object properly
-        student = Student(
-            sid,
-            name,
-            email,
-            password,
-            program,
-            level,
-            transcript_list  # pass transcript directly
-        )
-
-        # add student + transcript through the system
-        system.add_student(student)
-
-    print("🔥 Successfully added 16 students + transcripts!")
+from FacultyClass import Faculty
+from loginvalidation import Admin
+from NewStudentsClass import Student
 
 
 
 
-system=RegistrationSystem()
-seed_students() 
-print(system.view_transcript("2213004"))
+system = RegistrationSystem()
+sched = ScheduleSystem()
+
+print("System Initialized\n")
+
+
+## testing function 
+def test(name, func):
+    print(f"Testing: {name}")
+    try:
+        result = func()
+        print("Result:", result)
+    except Exception as e:
+        print("error:", e)
+    print()
+
+
+
+
+## registering a new admin method
+
+def test_add_admin():
+    admin = Admin(22230, "Ayman", "Ayman@gmail.com", "@Ay112233")
+    return system.add_admin(admin)
+
+test("Add Admin", test_add_admin)
+
+######## adding a new faculty member
+def test_add_faculty():
+    f = Faculty(1010, "Dr.Ayman", "Ayman@gmail.com", "@Ay112233")
+    return system.add_faculty(f)
+
+test("Add Faculty", test_add_faculty)
+
+
+############# testing add course method  
+def test_add_course():
+    c1 = Course("ENG101", "English", 3, 3, 0, [], 40, ["Computer"], 1)
+    c2 = Course("MATH101", "Calculus", 3, 3, 0, [], 40, ["Computer"], 1)
+    system.add_course(c1)
+    system.add_course(c2)
+
+    return "Courses Added"
+
+test("Add Courses", test_add_course)
+
+
+################ testing add student
+def test_add_student():
+    s = Student("2210010", "Ali Ahmed", "ali@uni.com", "@A123456", "Computer", 1, [])
+    return system.add_student(s)
+
+test("Add Student", test_add_student)
+
+################ testing get student info method by id 
+def test_get_student_info():
+    return system.get_student_info("2210010")
+
+test("Get Student Info", test_get_student_info)
+
+
+############# testing schdule system class
+
+## generating random lables for based on number of sections 
+def test_generate_section_labels():
+    return sched.generate_section_labels(3)
+
+test("Generate Section Labels", test_generate_section_labels)
+
+### validating if course time is in ["HH:MM"] format 
+def test_validate_time():
+    sched.validate_time("09:30")
+    return "OK"
+
+test("Validate Time", test_validate_time)
+
+## validating if course is in [Sun Mon Tue Wed Thu] format 
+def test_validate_days():
+    sched.validate_days(["Sun", "Tue"])
+    return "OK"
+
+test("Validate Days", test_validate_days)
+
+## Validate if lecture is in ["lecture online lab"] format
+def test_validate_lecture_type():
+    sched.validate_lecture_type("Lecture")
+    return "OK"
+
+test("Validate Lecture Type", test_validate_lecture_type)
+
+
+# ADD SCHEDULES
+#### set schedule for a specfic course 
+def test_add_schedule():
+    sc = Schedule("MATH101", 1, "08:00", "09:00", ["Sun", "Tue"], "Lecture", "Dr.Ayman", "Computer", "101")
+    sc2 = Schedule("ENG101", 1, "10:00", "12:00", ["Sun", "Tue"], "Lecture", "Dr.Ayman", "Computer", "101")
+
+    sched.add_schedule(sc)
+    sched.add_schedule(sc2)
+
+    return sched.get_course_sections("ENG101")
+
+test("Add Schedule", test_add_schedule)
+
+### testing enrollments
+
+## testing get available courses for student 
+def test_get_available_courses():
+    return system.get_available_courses("2210001")
+
+test("Get Available Courses", test_get_available_courses)
+
+
+# testing if student can register specfic course without conflicts
+def test_validate_schedule():
+    return system.validate_schedule("2210001", [("ENG101", "A")])
+
+test("Validate Schedule", test_validate_schedule)
+
+##  testing registering a student for a course method
+def test_register_student():
+    return system.register_student("2210001", [("ENG101", "A")])
+
+test("Register Student", test_register_student)
+
+## testing getting the current schedule for student
+def test_get_student_schedule():
+    return system.get_student_schedule("2210001")
+
+test("Get Student Schedule", test_get_student_schedule)
+
+
+#testing credit hours and conflict methods
+
+## getting total hours enrolled for specfic student
+def test_total_hours():
+    return sched.get_total_enrolled_hours("2210001")
+
+test("Get Total Enrolled Hours", test_total_hours)
+
+
+## testing if student exceeded hour limits 
+def test_credit_limit():
+    return sched.exceeds_credit_limit("2210001", [1])
+
+test("Exceeds Credit Limit", test_credit_limit)
+
+
+# FACULTY ASSIGNMENTS & CONFLICTS
+
+## set the prefered day and time faculty prefers 
+def test_set_availability():
+    return system.set_availability(1001, ["Sun 10:00-12:00", "Tue 14:00-16:00"])
+
+test("Faculty Set Availability", test_set_availability)
+
+
+## set prefered courses for faculty member 
+def test_set_course_preferences():
+    return system.set_course_preferences(1001, ["MATH101", "ENG101"])
+
+test("Faculty Set Course Preferences", test_set_course_preferences)
+
+## admin assigning a course to a faculty member and making sure it's within his days and time preference 
+def test_assign_course_to_faculty():
+    try:
+        return system.assign_course_to_faculty(1001,"MATH101")
+    except Exception as e:
+        return f"Expected Error (course missing): {e}"
+
+test("Assign Course To Faculty", test_assign_course_to_faculty)
+
+### get currently assigned courses for faculty
+def test_get_assigned_courses():
+    return system.get_assigned_courses(1001)
+
+test("Get Assigned Courses", test_get_assigned_courses)
+
+
+## check if new assignments to faculty by admin conflict with current assignments
+def test_detect_conflicts():
+    return system.detect_faculty_conflicts(1001,"ENG101")
+test("Detect Faculty Conflicts", test_detect_conflicts)
+
+
+## detect if course added to faculty is within time and day 
+def test_is_course_in_preferences():
+    return system.is_course_in_preferences(1001,"ENG101")
+test("Detect Faculty preferences", test_detect_conflicts)
+
+
+
+
+## transcript testing
+
+## view transcripts for student method
+def test_view_transcript():
+    return system.view_transcript("2210001")
+
+test("View Transcript", test_view_transcript)
+
+
+## testing enrollment data function
+
+def test_course_enrollment_data():
+    return system.get_course_enrollment_data()
+
+test("Course Enrollment Data", test_course_enrollment_data)
+
+
+## deleting student from db function
+
+def test_delete_student():
+    return system.delete_student("2210001")
+
+test("Delete Student", test_delete_student)
+
+print("test complete")
+
