@@ -42,7 +42,8 @@ class MainWindow(QMainWindow):
         self.registration=RegistrationSystem()
         
         #Student Course Registration================================
-
+        self.pushButton_registor.clicked.connect(self.register)
+        self.pushButton_Delete.clicked.connect(self.delete)
         #Admin Main Page ======================================
         self.pushButton_AdminProfile.clicked.connect(self.open_adminProfile)
         self.pushButton_AddSchedule.clicked.connect(self.open_addSchedule)
@@ -65,7 +66,7 @@ class MainWindow(QMainWindow):
         self.pushButton_AddCourse_2.clicked.connect(self.addition_course)
 
         #Add Faculty =========================================
-        self.lineEdit_Name_3.clicked.connect(self.add_faculty)
+        self.pushButton_Add_2.clicked.connect(self.add_faculty)
 
         #Log===============================
         print("UI loaded, stackedWidget current index:", self.stackedWidget.currentIndex())
@@ -170,7 +171,7 @@ class MainWindow(QMainWindow):
             self.lineEdit_Password.setPlaceholderText("Login error, try again.")
             print(f"Login failed: {e}")
         
-#========================= Main App Prperties ================================
+#===================================== Pop Windows =============================================
 
     def show_invalid_input(self,Error):
         QMessageBox.warning(self,
@@ -182,7 +183,8 @@ class MainWindow(QMainWindow):
         QMessageBox.warning(self,"Added Successfully")
         self.openHome()
 
-    
+    #========================= Main App Prperties ================================
+
     def clearGlobalVariables(self):
 
         global instance_data, instance_status, instance_object
@@ -260,7 +262,73 @@ class MainWindow(QMainWindow):
         except Exception as e:
             print(f"Error in show_transcripts: {e}")
 
+#==================================Student Course Registration=====================================
+    def show_data(self):
+        try:
+            results=self.registraion.get_available_courses(instance_ID_number)
+            model = QStandardItemModel()
+            model.setHorizontalHeaderLabels(["course_code",
+                                "course_name",
+                                "credit_hours",
+                                "section",
+                                "days",
+                                "start_time",
+                                "end_time",
+                                "instructor_name",
+                                "place",
+                                "room",
+                                "enrolled_count",
+                                "max_capacity" ])
+            for row in results:
+                
+                items = [QStandardItem(str(x)) for x in row]
+                model.appendRow(items)
+        
 
+            self.tableView.setModel(model)
+            # registred courses
+            results1=self.registraion.get_student_schedule(instance_ID_number)
+            model1 = QStandardItemModel()
+            
+            model1.setHorizontalHeaderLabels(["course_code",
+                                "course_name",
+                                "credit_hours",
+                                "section",
+                                "days",
+                                "start_time",
+                                "end_time",
+                                "instructor_name",
+                                "place",
+                                "room",
+                                "enrolled_count",
+                                "max_capacity"])
+            for row1 in results1:
+                
+                items1 = [QStandardItem(str(x1)) for x1 in row1]
+                model1.appendRow(items1)
+
+            self.tableView_2.setModel(model1)
+
+        except sqlite3.Error as e:
+            self.show_invalid_input(e)
+
+
+    def register(self):
+        try:
+            self.code=self.lineEdit_code.text()
+            self.section=self.lineEdit_section.text()
+            list_of_courses=[(self.code,self.section)]
+            self.registraion.register_student(instance_ID_number,list_of_courses)
+        except sqlite3.Error as e:
+            self.show_invalid_input(e)
+
+    def delete(self):
+        try:
+            self.code2=self.lineEdit_code2.text()
+            self.section2=self.lineEdit_section2.text()
+            self.registraion.delete_register_student(instance_ID_number,self.code2,self.section2)
+        except sqlite3.Error as e:
+            self.show_invalid_input(e)
 
 
 

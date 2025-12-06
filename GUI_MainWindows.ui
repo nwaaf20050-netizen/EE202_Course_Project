@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>993</width>
-    <height>806</height>
+    <width>1103</width>
+    <height>743</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,6 +21,13 @@
     <bool>true</bool>
    </property>
    <layout class="QGridLayout" name="gridLayout">
+    <item row="2" column="0">
+     <widget class="QPushButton" name="pushButton_Logout">
+      <property name="text">
+       <string>Logout</string>
+      </property>
+     </widget>
+    </item>
     <item row="1" column="0">
      <widget class="QPushButton" name="pushButton_Home">
       <property name="text">
@@ -31,20 +38,13 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="0">
-     <widget class="QPushButton" name="pushButton_Logout">
-      <property name="text">
-       <string>Logout</string>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="0">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="enabled">
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>9</number>
+       <number>10</number>
       </property>
       <widget class="QWidget" name="login">
        <layout class="QGridLayout" name="gridLayout_2">
@@ -728,9 +728,9 @@ p, li { white-space: pre-wrap; }
        </layout>
       </widget>
       <widget class="QWidget" name="StudentCourseRegistration">
-       <layout class="QGridLayout" name="gridLayout_7">
-        <item row="0" column="0" colspan="2">
-         <widget class="QLabel" name="label_26">
+       <layout class="QGridLayout" name="gridLayout_14">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_67">
           <property name="font">
            <font>
             <family>Rockwell</family>
@@ -742,58 +742,124 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QLabel" name="label_18">
-          <property name="font">
-           <font>
-            <family>Rockwell</family>
-           </font>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:22pt;&quot;&gt;Add course&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:22pt;&quot;&gt;إضافة مادة&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QLabel" name="label_23">
-          <property name="font">
-           <font>
-            <family>Rockwell</family>
-           </font>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:22pt;&quot;&gt;Registered Courses&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:22pt;&quot;&gt;المواد المسجلة&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_5">
             <item>
-             <layout class="QGridLayout" name="gridLayout_3">
+             <layout class="QGridLayout" name="gridLayout_7">
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_20">
+                <property name="font">
+                 <font>
+                  <pointsize>14</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>حذف مادة مسجلة </string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
               <item row="0" column="0">
-               <layout class="QVBoxLayout" name="verticalLayout_2">
+               <widget class="QLabel" name="label_21">
+                <property name="font">
+                 <font>
+                  <pointsize>14</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Delete Registered Course </string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <layout class="QHBoxLayout" name="horizontalLayout_3">
                 <item>
-                 <widget class="QLabel" name="label_19">
-                  <property name="font">
-                   <font>
-                    <family>Adobe Heiti Std R</family>
-                    <pointsize>15</pointsize>
-                    <weight>50</weight>
-                    <italic>false</italic>
-                    <bold>false</bold>
-                   </font>
+                 <layout class="QVBoxLayout" name="verticalLayout_16">
+                  <property name="spacing">
+                   <number>7</number>
                   </property>
-                  <property name="styleSheet">
-                   <string notr="true">font: 15pt &quot;Adobe Heiti Std R&quot;;</string>
-                  </property>
-                  <property name="text">
-                   <string>Course Name أسم المادة</string>
-                  </property>
-                 </widget>
+                  <item>
+                   <widget class="QLabel" name="label_22">
+                    <property name="font">
+                     <font>
+                      <pointsize>14</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Couse Code رمز المادة</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_23">
+                    <property name="font">
+                     <font>
+                      <pointsize>14</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Section الشعبة</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
                 </item>
                 <item>
-                 <widget class="QLabel" name="label_20">
+                 <layout class="QVBoxLayout" name="verticalLayout_15">
+                  <item>
+                   <widget class="QLineEdit" name="lineEdit_code2"/>
+                  </item>
+                  <item>
+                   <widget class="QLineEdit" name="lineEdit_section2"/>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+              <item row="3" column="0">
+               <widget class="QPushButton" name="pushButton_Delete">
+                <property name="text">
+                 <string>Delete Registered Course حذف مادة مسجلة </string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_24">
+              <property name="font">
+               <font>
+                <family>Rockwell</family>
+                <pointsize>14</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Add course&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;إضافة مادة&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QGridLayout" name="gridLayout_3">
+              <item row="0" column="1">
+               <layout class="QVBoxLayout" name="verticalLayout_2">
+                <item>
+                 <widget class="QLineEdit" name="lineEdit_code"/>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="lineEdit_section"/>
+                </item>
+               </layout>
+              </item>
+              <item row="0" column="0">
+               <layout class="QVBoxLayout" name="verticalLayout_3">
+                <item>
+                 <widget class="QLabel" name="label_26">
                   <property name="font">
                    <font>
                     <family>Adobe Heiti Std R</family>
@@ -812,7 +878,7 @@ p, li { white-space: pre-wrap; }
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="label_21">
+                 <widget class="QLabel" name="label_64">
                   <property name="styleSheet">
                    <string notr="true">font: 15pt &quot;Adobe Heiti Std R&quot;;</string>
                   </property>
@@ -821,22 +887,12 @@ p, li { white-space: pre-wrap; }
                   </property>
                  </widget>
                 </item>
-                <item>
-                 <widget class="QLabel" name="label_22">
-                  <property name="styleSheet">
-                   <string notr="true">font: 15pt &quot;Adobe Heiti Std R&quot;;</string>
-                  </property>
-                  <property name="text">
-                   <string>Cridits Hours عدد الساعات</string>
-                  </property>
-                 </widget>
-                </item>
                </layout>
               </item>
              </layout>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton">
+             <widget class="QPushButton" name="pushButton_registor">
               <property name="text">
                <string>Add Course إضافة المادة</string>
               </property>
@@ -847,69 +903,52 @@ p, li { white-space: pre-wrap; }
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_4">
             <item>
-             <layout class="QVBoxLayout" name="verticalLayout_3">
-              <item>
-               <widget class="QComboBox" name="comboBox"/>
-              </item>
-              <item>
-               <widget class="QComboBox" name="comboBox_2"/>
-              </item>
-              <item>
-               <widget class="QComboBox" name="comboBox_3"/>
-              </item>
-              <item>
-               <widget class="QComboBox" name="comboBox_4"/>
-              </item>
-             </layout>
+             <widget class="QLabel" name="label_65">
+              <property name="font">
+               <font>
+                <family>Rockwell</family>
+               </font>
+              </property>
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:22pt;&quot;&gt;Registered Courses&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:22pt;&quot;&gt;المواد المسجلة&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QTableView" name="tableView_2"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_8">
+            <item>
+             <widget class="QLabel" name="label_66">
+              <property name="font">
+               <font>
+                <family>Rockwell</family>
+               </font>
+              </property>
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:22pt;&quot;&gt;Available Courses&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:22pt;&quot;&gt;المواد المتاحة&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QTableView" name="tableView"/>
             </item>
            </layout>
           </item>
          </layout>
         </item>
-        <item row="2" column="1">
-         <widget class="QTableWidget" name="tableWidget">
-          <property name="enabled">
-           <bool>true</bool>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_19">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;حالة التسجيل &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-            <horstretch>4</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <attribute name="horizontalHeaderCascadingSectionResizes">
-           <bool>false</bool>
-          </attribute>
-          <column>
-           <property name="text">
-            <string>Course Name</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Course Code </string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Section </string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Cridits Hours </string>
-           </property>
-          </column>
          </widget>
         </item>
-        <item row="3" column="1">
-         <widget class="QLabel" name="label_24">
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_18">
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
@@ -2025,7 +2064,131 @@ border-color: green;</string>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="TheFaculty"/>
+      <widget class="QWidget" name="TheFaculty">
+       <layout class="QGridLayout" name="gridLayout_13">
+        <item row="0" column="0" colspan="2">
+         <widget class="QLabel" name="label_63">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>200</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 36pt &quot;Rockwell&quot;</string>
+          </property>
+          <property name="text">
+           <string>Add Faculty</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_62">
+          <property name="styleSheet">
+           <string notr="true">font: 15pt &quot;Rockwell&quot;</string>
+          </property>
+          <property name="text">
+           <string>The instructor's Name:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="lineEdit_Name_3">
+          <property name="styleSheet">
+           <string notr="true">font: 15pt &quot;Rockwell&quot;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_61">
+          <property name="styleSheet">
+           <string notr="true">font: 15pt &quot;Rockwell&quot;</string>
+          </property>
+          <property name="text">
+           <string>The instructor's ID:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="lineEdit_id">
+          <property name="styleSheet">
+           <string notr="true">font: 15pt &quot;Rockwell&quot;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_59">
+          <property name="styleSheet">
+           <string notr="true">font: 15pt &quot;Rockwell&quot;</string>
+          </property>
+          <property name="text">
+           <string>The instructor's Email:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QLineEdit" name="lineEdit_email">
+          <property name="styleSheet">
+           <string notr="true">font: 15pt &quot;Rockwell&quot;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_60">
+          <property name="styleSheet">
+           <string notr="true">font: 15pt &quot;Rockwell&quot;</string>
+          </property>
+          <property name="text">
+           <string>The instructor's Password:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QLineEdit" name="lineEdit_password">
+          <property name="styleSheet">
+           <string notr="true">font: 15pt &quot;Rockwell&quot;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0" colspan="2">
+         <widget class="QPushButton" name="pushButton_Add_2">
+          <property name="styleSheet">
+           <string notr="true">font: 15pt &quot;Rockwell&quot;</string>
+          </property>
+          <property name="text">
+           <string>Confirm</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -2035,7 +2198,7 @@ border-color: green;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>993</width>
+     <width>1103</width>
      <height>26</height>
     </rect>
    </property>
