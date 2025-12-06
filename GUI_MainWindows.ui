@@ -26,6 +26,9 @@
       <property name="text">
        <string>Home</string>
       </property>
+      <property name="shortcut">
+       <string>Esc</string>
+      </property>
      </widget>
     </item>
     <item row="2" column="0">
@@ -41,7 +44,7 @@
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>8</number>
+       <number>9</number>
       </property>
       <widget class="QWidget" name="login">
        <layout class="QGridLayout" name="gridLayout_2">
@@ -282,6 +285,9 @@ p, li { white-space: pre-wrap; }
           </property>
           <property name="text">
            <string>Login</string>
+          </property>
+          <property name="shortcut">
+           <string>Return</string>
           </property>
           <property name="autoDefault">
            <bool>false</bool>
@@ -1718,7 +1724,307 @@ border-color: green;</string>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="AddingNewCourses"/>
+      <widget class="QWidget" name="AddingNewCourses">
+       <layout class="QGridLayout" name="gridLayout_12">
+        <item row="0" column="0" colspan="7">
+         <widget class="QLabel" name="label_48">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>200</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 36pt &quot;Rockwell&quot;;
+</string>
+          </property>
+          <property name="text">
+           <string>Add new course</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_54">
+          <property name="styleSheet">
+           <string notr="true">font: 12pt &quot;rockwell&quot;</string>
+          </property>
+          <property name="text">
+           <string>Course code:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="lineEdit_CourseCode_2">
+          <property name="styleSheet">
+           <string notr="true">font: 12pt &quot;rockwell&quot;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QLabel" name="label_50">
+          <property name="styleSheet">
+           <string notr="true">font: 12pt &quot;rockwell&quot;</string>
+          </property>
+          <property name="text">
+           <string>Course name:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="3" colspan="2">
+         <widget class="QLineEdit" name="lineEdit_CourseName">
+          <property name="styleSheet">
+           <string notr="true">font: 12pt &quot;rockwell&quot;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="5">
+         <widget class="QLabel" name="label_56">
+          <property name="styleSheet">
+           <string notr="true">font: 12pt &quot;rockwell&quot;</string>
+          </property>
+          <property name="text">
+           <string>Course credit:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="6">
+         <widget class="QLineEdit" name="lineEdit_CourseCredit">
+          <property name="styleSheet">
+           <string notr="true">font: 12pt &quot;rockwell&quot;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_49">
+          <property name="styleSheet">
+           <string notr="true">font: 12pt &quot;rockwell&quot;</string>
+          </property>
+          <property name="text">
+           <string>Lecture hours:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="lineEdit_LectureHours">
+          <property name="styleSheet">
+           <string notr="true">font: 12pt &quot;rockwell&quot;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QLabel" name="label_55">
+          <property name="styleSheet">
+           <string notr="true">font: 12pt &quot;rockwell&quot;</string>
+          </property>
+          <property name="text">
+           <string>LAB hours:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="3" colspan="2">
+         <widget class="QLineEdit" name="lineEdit_LabHours">
+          <property name="styleSheet">
+           <string notr="true">font: 12pt &quot;rockwell&quot;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="5">
+         <widget class="QLabel" name="label_57">
+          <property name="styleSheet">
+           <string notr="true">font: 12pt &quot;rockwell&quot;</string>
+          </property>
+          <property name="text">
+           <string>Max capacity:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="6">
+         <widget class="QLineEdit" name="lineEdit_MaxCapacity">
+          <property name="styleSheet">
+           <string notr="true">font: 12pt &quot;rockwell&quot;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_52">
+          <property name="styleSheet">
+           <string notr="true">font: 12pt &quot;rockwell&quot;</string>
+          </property>
+          <property name="text">
+           <string>Program :</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QCheckBox" name="checkBox_Communication">
+          <property name="styleSheet">
+           <string notr="true">font: 9pt &quot;Rockwell&quot;</string>
+          </property>
+          <property name="text">
+           <string>Cummunication</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="2">
+         <widget class="QCheckBox" name="checkBox_Power">
+          <property name="styleSheet">
+           <string notr="true">font: 9pt &quot;Rockwell&quot;</string>
+          </property>
+          <property name="text">
+           <string>Power</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="3">
+         <widget class="QLabel" name="label_53">
+          <property name="styleSheet">
+           <string notr="true">font: 12pt &quot;rockwell&quot;</string>
+          </property>
+          <property name="text">
+           <string>Level:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="4">
+         <widget class="QComboBox" name="comboBox_Level_2">
+          <property name="styleSheet">
+           <string notr="true">font: 12pt &quot;Rockwell&quot;</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>1</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>2</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>3</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>4</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QCheckBox" name="checkBox_Biomedical">
+          <property name="styleSheet">
+           <string notr="true">font: 9pt &quot;Rockwell&quot;</string>
+          </property>
+          <property name="text">
+           <string>Biomedical</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="2">
+         <widget class="QCheckBox" name="checkBox_Computer">
+          <property name="styleSheet">
+           <string notr="true">font: 9pt &quot;Rockwell&quot;</string>
+          </property>
+          <property name="text">
+           <string>Computer</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0" colspan="4">
+         <widget class="QLabel" name="label_58">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>200</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Prerequisites must be separated by a comma ( , ). Example: EE101, EE102, EE103</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0">
+         <widget class="QLabel" name="label_51">
+          <property name="styleSheet">
+           <string notr="true">font: 12pt &quot;rockwell&quot;</string>
+          </property>
+          <property name="text">
+           <string>Prerequisites:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="1" colspan="2">
+         <widget class="QLineEdit" name="lineEdit_Prerequisites">
+          <property name="styleSheet">
+           <string notr="true">font: 12pt &quot;rockwell&quot;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="4" colspan="2">
+         <widget class="QPushButton" name="pushButton_AddCourse_2">
+          <property name="styleSheet">
+           <string notr="true">font: 12pt &quot;Rockwell&quot;</string>
+          </property>
+          <property name="text">
+           <string>Add the course</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="TheFaculty"/>
      </widget>
     </item>
